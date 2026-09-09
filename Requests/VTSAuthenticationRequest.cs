@@ -1,0 +1,31 @@
+﻿using System.Text.Json.Serialization;
+
+namespace VTSPlugin.Requests;
+
+public sealed class VTSAuthenticationRequest : VTSRequest<VTSAuthenticationRequestData>
+{
+    [JsonPropertyName("messageType")] public override string? MessageType { get; set; } = "AuthenticationRequest";
+}
+public sealed class VTSAuthenticationRequestData : VTSRequestData
+{
+    [JsonPropertyName("pluginName")] public required string? PluginName { get; set; }
+    [JsonPropertyName("pluginDeveloper")] public required string? PluginDeveloper { get; set; }
+    [JsonPropertyName("authenticationToken")] public required string? AuthenticationToken { get; set; }
+
+    public override void Reset()
+    {
+        base.Reset();
+        PluginName = default;
+        PluginDeveloper = default;
+        AuthenticationToken = default;
+    }
+
+    //public override StringBuilder ToString(StringBuilder b, string prefix = DefaultPrefix)
+    //{
+    //    base.ToString(b, prefix);
+    //    AppendLine(b, prefix, PluginName);
+    //    AppendLine(b, prefix, PluginDeveloper);
+    //    Append(b, prefix, AuthenticationToken);
+    //    return b;
+    //}
+}

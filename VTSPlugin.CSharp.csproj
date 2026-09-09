@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>VTSPlugin</RootNamespace>
+    <Version>0.5.0</Version>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <PackageVersion>$(Version)</PackageVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="VTSPlugin.WPF\**" />
+    <Compile Remove="VTSPlugin.Unity\**" />
+    <Compile Remove="VTSPlugin.Godot\**" />
+    <EmbeddedResource Remove="VTSPlugin.WPF\**" />
+    <EmbeddedResource Remove="VTSPlugin.Unity\**" />
+    <EmbeddedResource Remove="VTSPlugin.Godot\**" />
+    <None Remove="VTSPlugin.WPF\**" />
+    <None Remove="VTSPlugin.Unity\**" />
+    <None Remove="VTSPlugin.Godot\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PolySharp" Version="1.16.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json" Version="10.0.11" />
+  </ItemGroup>
+  
+</Project>
