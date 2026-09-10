@@ -115,10 +115,11 @@ public enum VTSLoggingLevel : int // int, to allow usage in CLS-compliant Interl
 
 public interface IVTSLogger
 {
-    /// <summary>
-    /// Default instance to use when none is provided.
-    /// </summary>
-    public static IVTSLogger Default => field ??= new ConsoleVTSLogger()
+    /// <remarks>
+    /// Default value is declared in its own strongly-typed field, so the JIT can "see"
+    /// the underlying type of <see cref="Default"/> property and devirtualize all the calls to it.
+    /// </remarks>
+    static readonly ConsoleVTSLogger m_Default = new()
     {
 #if TRACE
         LogLevel = VTSLoggingLevel.Trace
@@ -128,6 +129,10 @@ public interface IVTSLogger
         LogLevel = VTSLoggingLevel.Info
 #endif
     };
+    /// <summary>
+    /// Default instance to use when none is provided.
+    /// </summary>
+    public static IVTSLogger Default => m_Default;
     /// <remarks>
     /// Implementation should use <see cref="Interlocked"/> members for reading and writing!
     /// </remarks>
@@ -231,45 +236,45 @@ public static class IVTSLoggerExtensions
         }
 
         /// <summary>
-        /// <see cref="IVTSLogger.LogLevel"/> == <see cref="VTSLoggingLevel.Trace"/>.
+        /// <see cref="IVTSLogger.LogLevel"/> >= <see cref="VTSLoggingLevel.Trace"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool ShouldLog(VTSLoggingLevel level) => logger.LogLevel == level;
+        public bool ShouldLog(VTSLoggingLevel level) => logger.LogLevel >= level;
 
         /// <summary>
-        /// <see cref="IVTSLogger.LogLevel"/> == <see cref="VTSLoggingLevel.Trace"/>.
+        /// <see cref="IVTSLogger.LogLevel"/> >= <see cref="VTSLoggingLevel.Trace"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool ShouldLogTrace() => logger.LogLevel == VTSLoggingLevel.Trace;
+        public bool ShouldLogTrace() => logger.LogLevel >= VTSLoggingLevel.Trace;
 
         /// <summary>
-        /// <see cref="IVTSLogger.LogLevel"/> == <see cref="VTSLoggingLevel.Debug"/>.
+        /// <see cref="IVTSLogger.LogLevel"/> >= <see cref="VTSLoggingLevel.Debug"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool ShouldLogDebug() => logger.LogLevel == VTSLoggingLevel.Debug;
+        public bool ShouldLogDebug() => logger.LogLevel >= VTSLoggingLevel.Debug;
 
         /// <summary>
-        /// <see cref="IVTSLogger.LogLevel"/> == <see cref="VTSLoggingLevel.Info"/>.
+        /// <see cref="IVTSLogger.LogLevel"/> >= <see cref="VTSLoggingLevel.Info"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool ShouldLogInfo() => logger.LogLevel == VTSLoggingLevel.Info;
+        public bool ShouldLogInfo() => logger.LogLevel >= VTSLoggingLevel.Info;
 
         /// <summary>
-        /// <see cref="IVTSLogger.LogLevel"/> == <see cref="VTSLoggingLevel.Warn"/>.
+        /// <see cref="IVTSLogger.LogLevel"/> >= <see cref="VTSLoggingLevel.Warn"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool ShouldLogWarn() => logger.LogLevel == VTSLoggingLevel.Warn;
+        public bool ShouldLogWarn() => logger.LogLevel >= VTSLoggingLevel.Warn;
 
         /// <summary>
-        /// <see cref="IVTSLogger.LogLevel"/> == <see cref="VTSLoggingLevel.Error"/>.
+        /// <see cref="IVTSLogger.LogLevel"/> >= <see cref="VTSLoggingLevel.Error"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool ShouldLogError() => logger.LogLevel == VTSLoggingLevel.Error;
+        public bool ShouldLogError() => logger.LogLevel >= VTSLoggingLevel.Error;
 
         /// <summary>
-        /// <see cref="IVTSLogger.LogLevel"/> == <see cref="VTSLoggingLevel.Fatal"/>.
+        /// <see cref="IVTSLogger.LogLevel"/> >= <see cref="VTSLoggingLevel.Fatal"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool ShouldLogFatal() => logger.LogLevel == VTSLoggingLevel.Fatal;
+        public bool ShouldLogFatal() => logger.LogLevel >= VTSLoggingLevel.Fatal;
     }
 }

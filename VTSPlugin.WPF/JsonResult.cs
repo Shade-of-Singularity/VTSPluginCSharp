@@ -97,13 +97,6 @@ public readonly struct JsonResult<T> : IDisposable
     /// </remarks>
     public readonly required ReadOnlyMemory<byte> Data { get; init; }
     /// <summary>
-    /// Logger to use on deserialization exception.
-    /// </summary>
-    /// <remarks>
-    /// Same as the one used in 
-    /// </remarks>
-    public readonly required IVTSLogger Logger { get; init; }
-    /// <summary>
     /// Deserializer method for deserializing <see cref="Data"/> as <typeparamref name="T"/>.
     /// </summary>
     /// <remarks>
@@ -118,6 +111,14 @@ public readonly struct JsonResult<T> : IDisposable
     /// Only used if you utilize <see cref="UnpackScoped"/> or <see cref="TryUnpackScoped"/> methods.
     /// </remarks>
     public readonly required DisposeHandler? Disposer { get; init; }
+    /// <summary>
+    /// Logger to use on deserialization exception.
+    /// </summary>
+    /// <remarks>
+    /// Same as the one used by the system, which created this <see cref="JsonResult{T}"/>,
+    /// or <see cref="IVTSLogger.Default"/> as a fallback.
+    /// </remarks>
+    public readonly required IVTSLogger Logger { get; init; }
     /// <summary>
     /// If <see cref="Successful"/> is <see langword="true"/> - tries to parse <see cref="Data"/> to type <typeparamref name="T"/>.
     /// </summary>
