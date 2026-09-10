@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>VTSPlugin.Godot</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GDTask" Version="3.2.1" />
+    <PackageReference Include="Godot.SourceGenerators" Version="4.7.2" />
+    <PackageReference Include="GodotSharp" Version="4.7.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VTSPlugin.CSharp\VTSPlugin.CSharp.csproj" />
+  </ItemGroup>
+
+</Project>

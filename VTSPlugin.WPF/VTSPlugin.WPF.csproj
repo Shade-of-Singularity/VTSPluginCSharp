@@ -3,16 +3,14 @@
   <PropertyGroup>
     <TargetFramework>net9.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <SignAssembly>False</SignAssembly>
+    <LangVersion>preview</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>VTSPlugin.WPF</RootNamespace>
+
+    <UseWPF>true</UseWPF>
     <Title>VTS Plugin (WPF)</Title>
     <Copyright>Shade of Singularity (SoG)</Copyright>
-    <LangVersion>preview</LangVersion>
-    <RootNamespace>VTSPlugin.WPF</RootNamespace>
-    <Version>0.5.0</Version>
-    <AssemblyVersion>$(Version)</AssemblyVersion>
-    <PackageVersion>$(Version)</PackageVersion>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VTSPlugin.CSharp.csproj" />
+    <ProjectReference Include="..\VTSPlugin.CSharp\VTSPlugin.CSharp.csproj" />
   </ItemGroup>
 
 </Project>

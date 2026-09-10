@@ -399,3 +399,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# VTS Plugin root project, for editing from the same .sln.
+[Oo]bj/
+[Bb]in/

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <Compile Remove="VTSPlugin.Console\**" />
+    <Compile Remove="VTSPlugin.CSharp\**" />
+    <Compile Remove="VTSPlugin.GodotEditor\**" />
+    <Compile Remove="VTSPlugin.Godot\**" />
+    <Compile Remove="VTSPlugin.WPF\**" />
+    <EmbeddedResource Remove="VTSPlugin.Console\**" />
+    <EmbeddedResource Remove="VTSPlugin.CSharp\**" />
+    <EmbeddedResource Remove="VTSPlugin.GodotEditor\**" />
+    <EmbeddedResource Remove="VTSPlugin.Godot\**" />
+    <EmbeddedResource Remove="VTSPlugin.WPF\**" />
+    <None Remove="VTSPlugin.Console\**" />
+    <None Remove="VTSPlugin.CSharp\**" />
+    <None Remove="VTSPlugin.GodotEditor\**" />
+    <None Remove="VTSPlugin.Godot\**" />
+    <None Remove="VTSPlugin.WPF\**" />
+  </ItemGroup>
+
+</Project>
