@@ -400,6 +400,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# VTS Plugin root project, for editing from the same .sln.
+# Warudo Plugin root project exclusions.
 [Oo]bj/
 [Bb]in/
