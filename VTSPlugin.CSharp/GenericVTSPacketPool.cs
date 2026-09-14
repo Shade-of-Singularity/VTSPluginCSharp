@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+﻿namespace VTSPlugin;
 
-namespace VTSPlugin;
-
+/// <summary>
+/// Default implementation for <see cref="VTSPacketPool.Shared"/> based on C#'s generics.
+/// </summary>
+/// <remarks>
+/// Uses C#'s application memory mapping directly (a.k.a. generics).
+/// Class should not be instantiated more than once.
+/// </remarks>
 internal sealed class GenericVTSPacketPool : VTSPacketPool
 {
+    public static readonly GenericVTSPacketPool Instance = new();
+    /// TODO: Might use implementation from: https://github.com/dotnet/dotnet/blob/main/src/aspnetcore/src/ObjectPool/src/DefaultObjectPool.cs
+    /// Or: https://github.com/dotnet/dotnet/blob/b0f34d51fccc69fd334253924abd8d6853fad7aa/src/runtime/src/libraries/System.Collections.Concurrent/src/System/Collections/Concurrent/ConcurrentStack.cs
     static class Pool<T> where T : VTSPacketData
     {
         public static int Capacity
@@ -101,6 +107,11 @@ internal sealed class GenericVTSPacketPool : VTSPacketPool
             finally { if (taken) Lock.Exit(true); }
         }
     }
+
+    /// <summary>
+    /// .ctor is made private so you can never instantiate <see cref="GenericVTSPacketPool"/> twice.
+    /// </summary>
+    private GenericVTSPacketPool() { }
 
     public override int GetPoolCapacity<T>() => Pool<T>.Capacity;
     public override void SetPoolCapacity<T>(int capacity) => Pool<T>.Capacity = capacity;

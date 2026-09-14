@@ -1,7 +1,8 @@
 ﻿using VoiceTrigger.Logging;
 using VTS.Core;
+using VTSPlugin;
 
-namespace VTSPlugin;
+namespace VTSPlugin.Legacy;
 
 public sealed class CustomVTSLogger : IVTSLogger
 {

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace VTSPlugin;
+namespace VTSPlugin.Legacy;
 
 public static class ErrorIDExtensions
 {

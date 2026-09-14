@@ -6,6 +6,7 @@
     <LangVersion>preview</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>VTSPlugin.Console</RootNamespace>
+    <Configurations>UniTask-Debug;UniTask-Release;GDTask-Debug;GDTask-Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

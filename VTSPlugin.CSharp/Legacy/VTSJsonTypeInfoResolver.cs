@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 
-namespace VTSPlugin
+namespace VTSPlugin.Legacy
 {
     /// <summary>
     /// Implementation extending <see cref="DefaultJsonTypeInfoResolver"/>, to skip any fields marked with <see langword="required"/> keyword.

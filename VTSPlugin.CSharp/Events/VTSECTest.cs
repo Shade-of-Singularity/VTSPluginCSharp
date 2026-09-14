@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using VTS.Core;
+using VTSPlugin.Legacy;
 
 namespace VTSPlugin.Events;
 

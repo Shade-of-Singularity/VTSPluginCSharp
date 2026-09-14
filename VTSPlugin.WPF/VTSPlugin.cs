@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace VTSPlugin;
+namespace VTSPlugin.Legacy;
 
 public sealed partial class VTSPlugin(ITokenStorage storage, string? name = null, string? developer = null, string? icon = null) : ObservableObject
 {

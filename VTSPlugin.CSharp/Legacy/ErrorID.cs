@@ -1,4 +1,4 @@
-﻿namespace VTSPlugin;
+﻿namespace VTSPlugin.Legacy;
 
 /// <summary>
 /// All known Error IDs for <see cref="VTSPlugin.VTSResponseData.ErrorID"/>.
@@ -23,16 +23,25 @@ public enum ErrorID
     /// Happens if deserializer used for parsing received packet signals back that deserialization failed, instead of throwing an exception.
     /// Mainly used in <see cref="JsonResult.TryUnpack"/> and <see cref="JsonResult.TryUnpackScoped"/>.
     /// </summary>
-    DeserializationFailed = -4,
+    DeserializationFailed = -5,
     /// <summary>
     /// Happens if deserializer used for parsing received packet threw an exception.
     /// Mainly used in <see cref="JsonResult.TryUnpack"/> and <see cref="JsonResult.TryUnpackScoped"/>.
     /// </summary>
-    DeserializationException = -3,
+    DeserializationException = -4,
     /// <summary>
     /// Happens when a specified request times-out client-side.
     /// </summary>
-    RequestTimeout = -2,
+    RequestTimeout = -3,
+
+    /// <summary>
+    /// A default error id for request exceptions caused by internal code failures.
+    /// </summary>
+    /// <remarks>
+    /// Usually the exception itself will be output to the logs.
+    /// Error message may or may not be provided - there is no guarantees here, but you can still check if ErrorMessage exists.
+    /// </remarks>
+    ClientSideException = -1,
 
     /// <summary>
     /// Default value for most return values.

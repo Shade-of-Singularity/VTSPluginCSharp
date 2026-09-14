@@ -1,7 +1,9 @@
 ﻿using System.IO;
 using VoiceTrigger.Logging;
+using VTSPlugin;
+using VTSPlugin.Legacy;
 
-namespace VTSPlugin;
+namespace VTSPlugin.Legacy;
 
 public static class VTSIconProvider
 {

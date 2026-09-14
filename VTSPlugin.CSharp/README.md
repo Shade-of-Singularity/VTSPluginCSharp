@@ -91,3 +91,11 @@ else
 	Console.WriteLine($"Request failed!\n{result}");
 }
 ```
+
+# Tasks
+Since Godot and Unity use different type of tasks - VTSPlugin.CSharp adapts by using aliases and conditional compilation.
+- In Godot - `GDTask` is used.
+- In Unity - `UniTask`.
+For this reason, all tasks are aliased under `AsyncTask` and its variations.
+
+You can see all the aliases at `VTSPlugin.CSharp\TaskAliases.cs`.

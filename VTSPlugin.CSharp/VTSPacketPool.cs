@@ -1,15 +1,12 @@
-﻿using System;
-
-namespace VTSPlugin;
+﻿namespace VTSPlugin;
 
 /// <summary>
 /// Special pool, designed specifically for <see cref="VTSPacket"/> and <see cref="VTSPacketData"/>.
 /// </summary>
 public abstract class VTSPacketPool
 {
-    protected const int DefaultCapacity = 16;
-
-    public static readonly VTSPacketPool Shared = new GenericVTSPacketPool();
+    public static readonly VTSPacketPool Shared = GenericVTSPacketPool.Instance;
+    protected static readonly int DefaultCapacity = Environment.ProcessorCount * 2;
 
     public abstract int GetPoolCapacity<T>() where T : VTSPacketData;
     public abstract void SetPoolCapacity<T>(int capacity) where T : VTSPacketData;

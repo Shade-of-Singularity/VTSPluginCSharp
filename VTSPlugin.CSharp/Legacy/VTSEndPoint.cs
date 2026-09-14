@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 using VoiceTrigger.Logging;
+using VTSPlugin;
+using VTSPlugin.Legacy;
 
-namespace VTSPlugin;
+namespace VTSPlugin.Legacy;
 
 /// <summary>
 /// Describes VTubeStudio instance.

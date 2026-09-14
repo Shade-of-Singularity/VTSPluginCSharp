@@ -3,6 +3,12 @@ using System.Runtime.CompilerServices;
 
 namespace VTSPlugin;
 
+/// <summary>
+/// Helper functions when working with <see cref="Interlocked"/>.
+/// </summary>
+/// <remarks>
+/// CLS standardized, to use in .NET Standard builds.
+/// </remarks>
 internal static class InterlockedHelpers
 {
     /// <inheritdoc cref="Interlocked.CompareExchange(ref long, long, long)"/>

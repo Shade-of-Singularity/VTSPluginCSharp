@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace VTSPlugin;
+namespace VTSPlugin.Legacy;
 
 public sealed class NotStartedException(string message) : Exception(message)
 {

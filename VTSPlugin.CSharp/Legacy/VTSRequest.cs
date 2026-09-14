@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace VTSPlugin;
+namespace VTSPlugin.Legacy;
 
 // Note: Maybe use pool TData and Rent/Return it on Json deserialization/disposal?
 // September 8th: On it.

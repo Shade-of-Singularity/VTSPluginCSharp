@@ -5,4 +5,12 @@
 		<PackageVersion>$(Version)</PackageVersion>
 		<Copyright>Shade of Singularity (SoG)</Copyright>
 	</PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'GDTask-Debug' Or '$(Configuration)' == 'GDTask-Release'">
+    <DefineConstants>GDTask</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'UniTask-Debug' Or '$(Configuration)' == 'UniTask-Release'">
+    <DefineConstants>UniTask</DefineConstants>
+  </PropertyGroup>
 </Project>

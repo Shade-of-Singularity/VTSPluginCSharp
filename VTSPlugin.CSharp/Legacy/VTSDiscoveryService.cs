@@ -7,9 +7,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using VoiceTrigger.Logging;
+using VTSPlugin;
+using VTSPlugin.Legacy;
 using VTSPlugin.Requests;
 
-namespace VTSPlugin;
+namespace VTSPlugin.Legacy;
 
 /// <summary>
 /// Responsible for discovering new instances of VTube Studio and timing out old ones based on keep-alive events.

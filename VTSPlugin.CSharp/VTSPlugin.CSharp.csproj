@@ -6,6 +6,7 @@
     <LangVersion>preview</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>VTSPlugin</RootNamespace>
+    <Configurations>UniTask-Debug;UniTask-Release;GDTask-Debug;GDTask-Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +27,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Text.Json" Version="10.0.11" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'GDTask-Release' Or '$(Configuration)' == 'GDTask-Debug'">
+    <PackageReference Include="GDTask" Version="3.2.1" />
+    <PackageReference Include="Godot.SourceGenerators" Version="4.7.2" />
+    <PackageReference Include="GodotSharp" Version="4.7.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'UniTask-Release' Or '$(Configuration)' == 'UniTask-Debug'">
+    <PackageReference Include="UniTask" Version="2.5.11" />
   </ItemGroup>
   
 </Project>

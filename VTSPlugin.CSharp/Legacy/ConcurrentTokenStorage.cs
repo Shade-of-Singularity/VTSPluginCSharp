@@ -1,8 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿//using CommunityToolkit.Mvvm.ComponentModel;
 using System.IO;
 using VoiceTrigger.Logging;
+using VTSPlugin;
+using VTSPlugin.Legacy;
 
-namespace VTSPlugin;
+namespace VTSPlugin.Legacy;
 
 public sealed partial class ConcurrentTokenStorage(string directory, string fileName) : ObservableObject, ITokenStorage
 {

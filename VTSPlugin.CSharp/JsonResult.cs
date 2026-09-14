@@ -1,6 +1,7 @@
 ﻿using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using VTSPlugin.Legacy;
 
 namespace VTSPlugin.WPF;
 
@@ -44,6 +45,13 @@ public readonly struct JsonResult<T> : IDisposable
     /// </para>
     /// </remarks>
     public readonly required bool Successful { get; init; }
+    /// <summary>
+    /// When the result arrived.
+    /// </summary>
+    /// <remarks>
+    /// If failed client-side - returns <see cref="DateTimeOffset.UtcNow"/> via <see cref="DateTimeOffset.ToUnixTimeMilliseconds"/>.
+    /// </remarks>
+    public readonly required long Timestamp { get; init; }
     /// <summary>
     /// <see cref="VTSAPI.JsonPropertyNames.ErrorID"/> value parsed from the message, if <see cref="Successful"/> is <see langword="false"/>.
     /// </summary>
@@ -344,6 +352,7 @@ public readonly struct JsonResult<T> : IDisposable
         Successful = false,
         ErrorID = errorId,
         ErrorMessage = errorMessage,
+        Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
         APIName = ReadOnlyMemory<byte>.Empty,
         APIVersion = ReadOnlyMemory<byte>.Empty,
         MessageType = ReadOnlyMemory<byte>.Empty,

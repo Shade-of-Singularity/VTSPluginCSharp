@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using VTSPlugin;
+using VTSPlugin.Legacy;
 
-namespace VTSPlugin;
+namespace VTSPlugin.Legacy;
 
 /// <summary>
 /// TODO: Move to VTSHelpers, to remove ambiguity with <see cref="VTSPacket"/> and <see cref="VTSPacketData"/>.

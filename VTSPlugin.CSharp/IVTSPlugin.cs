@@ -1,14 +1,14 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Cysharp.Threading.Tasks;
+﻿using System.Buffers;
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Net;
-using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
 using System.Text;
+using VTSPlugin;
+using VTSPlugin.Legacy;
 using VTSPlugin.Requests;
 
-namespace VTSPlugin.WPF;
+namespace VTSPlugin;
 
 /// <summary>
 /// Information about the plugin.
@@ -62,102 +62,6 @@ public interface IVTSPlugin
     void Set(string? name = null, string? author = null, string? icon = null);
 }
 
-public interface IVTSEndPoint
-{
-    /// <summary>
-    /// Port on which VTube Studio instance communicates on.
-    /// </summary>
-    ushort Port { get; }
-    /// <summary>
-    /// Cached <see cref="IPEndPoint"/> instance to use in your <see cref="ClientWebSocket"/> implementation.
-    /// </summary>
-    /// <remarks>
-    /// Unless custom <see cref="IVTSDiscoveryService"/> is used, 
-    /// </remarks>
-    IPEndPoint IPEndPoint { get; }
-    /// <summary>
-    /// <see cref="CancellationTokenSource"/>, cancelled on <see cref="Kill"/>
-    /// </summary>
-    CancellationTokenSource KillTokenSource { get; }
-    /// <summary>
-    /// Token, cancelled on <see cref="Kill"/>.
-    /// </summary>
-    public CancellationToken KillToken => KillTokenSource.Token;
-    /// <summary>
-    /// Whether connection is alive or not.
-    /// </summary>
-    /// <remarks>
-    /// In async programming, this parameter might return <see langword="true"/> microseconds before end-point is killed!
-    /// You can use this property for debugging, but in other cases - prefer using <see cref="KillTokenSource"/>.
-    /// </remarks>
-    public bool Alive => !KillTokenSource.IsCancellationRequested;
-    /// <summary>
-    /// Last tick when <see cref="KeepAlive"/> was used.
-    /// </summary>
-    long LastKeepAliveTick { get; }
-    /// <summary>
-    /// Kills end-point and all associated 
-    /// </summary>
-    void Kill();
-    /// <summary>
-    /// Registers <see cref="Environment.TickCount64"/> to <see cref="LastKeepAliveTick"/>.
-    /// </summary>
-    /// <remarks>
-    /// If end-point is killed - method won't throw, but will not restore killed end-point either!
-    /// </remarks>
-    void KeepAlive();
-}
-
-/// <summary>
-/// Helpful extensions when working with <see cref="IVTSPlugin"/>s.
-/// </summary>
-public static class VTSPluginExtensions
-{
-    const long TicksTo100Nanoseconds = 1000;
-    public static long TicksSinceLastKeepAlive(this IVTSEndPoint ep) => TicksSinceLastKeepAlive(ep, Environment.TickCount64);
-    public static long TicksSinceLastKeepAlive(this IVTSEndPoint ep, long tickNow)
-    {
-        tickNow -= ep.LastKeepAliveTick;
-        if (tickNow < 0) return 0;
-        return tickNow;
-    }
-
-    public static TimeSpan TimeSinceLastKeepAlive(this IVTSEndPoint ep) => TimeSinceLastKeepAlive(ep, Environment.TickCount64);
-    public static TimeSpan TimeSinceLastKeepAlive(this IVTSEndPoint ep, long tickNow)
-    {
-        tickNow -= ep.LastKeepAliveTick;
-        if (tickNow < 0) return new TimeSpan(0);
-        return new TimeSpan(tickNow * TicksTo100Nanoseconds);
-    }
-}
-
-/// <summary>
-/// Describes any object which has <see cref="IVTSLogger"/> attached to them.
-/// </summary>
-public interface IHasVTSLogger
-{
-    /// <summary>
-    /// Logger to use for any logs and errors.
-    /// </summary>
-    /// <remarks>
-    /// If not provided - returns <see cref="IVTSLogger.Default"/>.
-    /// </remarks>
-    public IVTSLogger Logger { get; }
-}
-
-/// <summary>
-/// Connection status of an <see cref="IVTSConnection"/>.
-/// </summary>
-/// Note: inherits <see langword="int"/> for usage in CLS-compliant <see cref="Interlocked"/> methods.
-public enum VTSConnectionStatus : int // Must inherit int
-{
-    Idle,
-    Connecting,
-    // Authenticating?
-    // Authenticated?
-    Connected,
-}
-
 /// <summary>
 /// Connection instance, actively communicating with <see cref="IVTSEndPoint"/>.
 /// </summary>
@@ -185,7 +89,7 @@ public interface IVTSConnection : IVTSRequestManager, IHasVTSLogger
     /// </para>
     /// </summary>
     /// <inheritdoc cref="Reconnect"/>
-    UniTask<bool> TryReconnect();
+    AsyncBoolTask TryReconnect();
     /// <summary>
     /// Reconnects to last known <see cref="EndPoint"/>.
     /// <para>
@@ -196,7 +100,7 @@ public interface IVTSConnection : IVTSRequestManager, IHasVTSLogger
     /// <returns>
     /// <see cref="UniTask"/>, for awaiting <see cref="Disconnect"/> and <see cref="Connect(IVTSEndPoint)"/> consecutively.
     /// </returns>
-    UniTask Reconnect();
+    AsyncTask Reconnect();
     /// <summary>
     /// Connects to a given <paramref name="endPoint"/>.
     /// <para>
@@ -205,7 +109,7 @@ public interface IVTSConnection : IVTSRequestManager, IHasVTSLogger
     /// </para>
     /// </summary>
     /// <inheritdoc cref="Connect(IVTSEndPoint)"/>
-    UniTask<bool> TryConnect(IVTSEndPoint endPoint);
+    AsyncBoolTask TryConnect(IVTSEndPoint endPoint);
     /// <summary>
     /// Connects to a given <paramref name="endPoint"/>.
     /// </summary>
@@ -219,8 +123,8 @@ public interface IVTSConnection : IVTSRequestManager, IHasVTSLogger
     /// </para>
     /// </remarks>
     /// <param name="endPoint"></param>
-    /// <returns><see cref="UniTask"/> from <see cref="Disconnect"/> and this method combined.</returns>
-    UniTask Connect(IVTSEndPoint endPoint);
+    /// <returns><see cref="AsyncTask"/> from <see cref="Disconnect"/> and this method combined.</returns>
+    AsyncTask Connect(IVTSEndPoint endPoint);
     /// <summary>
     /// Disconnects from current <see cref="EndPoint"/>, if it matches provided <paramref name="endPoint"/>.
     /// <para>
@@ -228,7 +132,7 @@ public interface IVTSConnection : IVTSRequestManager, IHasVTSLogger
     /// Will only disconnect <see cref="IVTSConnection"/> only if end-points still match after change.
     /// </para>
     /// </summary>
-    UniTask Disconnect(IVTSEndPoint endPoint);
+    AsyncTask Disconnect(IVTSEndPoint endPoint);
     /// <summary>
     /// Disconnects from current <see cref="EndPoint"/>.
     /// Does nothing if <see cref="IVTSConnection"/> is already disconnected.
@@ -238,8 +142,120 @@ public interface IVTSConnection : IVTSRequestManager, IHasVTSLogger
     /// </para>
     /// </summary>
     /// <returns></returns>
-    UniTask Disconnect();
+    AsyncTask Disconnect();
 }
+
+/// <summary>
+/// Experimental implementation testing RequestID processing with zero allocation.
+/// </summary>
+/// <remarks>
+/// Marked as abstract to allow overrides. A default final implementation is provided as <see cref="VTSConnection"/>.
+/// </remarks>
+public abstract class AbstractVTSConnection : IVTSRequestManager
+{
+    public IVTSLogger Logger { get; private set; } = IVTSLogger.Default;
+
+    // TODO: Fail all requests on disconnection/end-point kill.
+    readonly ConcurrentDictionary<ReadOnlyMemory<byte>, RequestEntry> Requests = new();
+    readonly struct RequestEntry(IMemoryOwner<byte> allocation, ResettableCompletionSource<IMemoryOwner<byte>> completion)
+    {
+        public readonly IMemoryOwner<byte> allocation = allocation;
+        public readonly ResettableCompletionSource<IMemoryOwner<byte>> completion = completion;
+    }
+
+    public async UniTask<JsonResult<T>> Request<T>(VTSRequestTemplate request, TimeSpan timeout) where T : VTSResponseData
+    {
+        // Generates RequestID using 16 readable characters from A to P (4 bits).
+        const int RequestIDLength = 32;
+        Span<byte> values = stackalloc byte[RequestIDLength];
+        Random.Shared.NextBytes(values);
+        for (int i = 0; i < RequestIDLength; i += 4)
+        {
+            const int Shift = 'A';
+            const int RangeMask = 0b1111; // Range: from A to P.
+            values[i] = (byte)((Shift + values[i]) & RangeMask);
+            values[i + 1] = (byte)((Shift + values[i + 1]) & RangeMask);
+            values[i + 2] = (byte)((Shift + values[i + 2]) & RangeMask);
+            values[i + 3] = (byte)((Shift + values[i + 3]) & RangeMask);
+        }
+        var owner = MemoryPool<byte>.Shared.Rent(RequestIDLength);
+        var slice = owner.Memory[..RequestIDLength];
+        values.CopyTo(slice.Span);
+
+        // Tries to list the request entry.
+        // If failed - returns failed result.
+        var source = ResettableCompletionSourcePool.Shared.Rent<IMemoryOwner<byte>>();
+        RequestEntry entry = new(owner, source);
+        try
+        {
+            if (Requests.TryAdd(slice, entry))
+            {
+                // TODO: Send request using IVTSSocket here.
+
+                // TODO: Add pool-able timeout handler here, if timeout is not infinite.
+
+                // Awaits for request to fail or be satisfied.
+                // TODO: Add better handling for: cancellation, deserialization failure, etc.
+                await source.Task;
+
+                return new JsonResult<T>()
+                {
+                    Successful = true,
+                    ErrorID = ErrorID.None,
+                    ErrorMessage = ReadOnlyMemory<byte>.Empty,
+                    // TODO: Slice those from a received packet.
+                    Timestamp = default,
+                    APIName = ReadOnlyMemory<byte>.Empty,
+                    RequestID = ReadOnlyMemory<byte>.Empty,
+                    APIVersion = ReadOnlyMemory<byte>.Empty,
+                    Data = ReadOnlyMemory<byte>.Empty,
+                    // Temporary here, until API rework.
+                    Logger = Logger,
+                    Deserializer = (i) =>
+                    {
+                        throw new NotImplementedException();
+                    }
+                };
+
+                static bool Deserializer(ReadOnlyMemory<byte> data, out T instance)
+                {
+
+                }
+                static bool Disposer(T instance)
+                {
+                    VTSPacketPool.Shared.Return(instance);
+                }
+            }
+            else
+            {
+                // TODO: Reattempt RequestID generation 1024 times instead, and release resources if failed.
+                Logger.TryLog("Request with a same ID already registered!", this);
+            }
+        }
+        catch (OperationCanceledException) // Cancelled or timed out.
+        {
+            return JsonResult<T>.FromFailed(ErrorID.None);
+        }
+        catch (Exception ex)
+        {
+            Logger.TryLog(ex, this);
+            return JsonResult<T>.FromFailed(ErrorID.ClientSideException);
+        }
+        finally
+        {
+            ResettableCompletionSourcePool.Shared.Return(source);
+            owner.Dispose();
+        }
+    }
+}
+
+/// <summary>
+/// Experimental implementation testing RequestID processing with zero allocation.
+/// </summary>
+/// <remarks>
+/// Finalizes implementation in <see cref="AbstractVTSConnection"/>.
+/// </remarks>
+public sealed class VTSConnection : AbstractVTSConnection;
 
 /// <summary>
 /// Interface for an abstract, capable of sending requests somewhere else.
@@ -254,14 +270,16 @@ public interface IVTSRequestManager
 /// <summary>
 /// Useful extensions for working with <see cref="IVTSConnection"/>.
 /// </summary>
-public static class VTSRequestHandlerExtensions
+public static class VTSRequestManagerExtensions
 {
     /// <inheritdoc cref="IVTSRequestManager.Request{T}(VTSRequestTemplate, TimeSpan)"/>
     /// <remarks>
     /// Request will have an infinite timeout.
     /// </remarks>
     /// <seealso cref="Timeout.InfiniteTimeSpan"/>
-    public static UniTask<JsonResult<T>> Request<T>(this IVTSRequestManager manager, VTSRequestTemplate request) where T : VTSResponseData
+    public static UniTask<JsonResult<T>> Request<TManager, T>(this TManager manager, VTSRequestTemplate request)
+        where TManager : IVTSRequestManager
+        where T : VTSResponseData
     {
         return manager.Request<T>(request, Timeout.InfiniteTimeSpan);
     }

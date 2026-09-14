@@ -1,20 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
+    <Configurations>UniTask-Debug;UniTask-Release;GDTask-Debug;GDTask-Release</Configurations>
+  </PropertyGroup>
+
   <ItemGroup>
+    <Compile Remove="VTSPlugin.API\**" />
     <Compile Remove="VTSPlugin.Console\**" />
     <Compile Remove="VTSPlugin.CSharp\**" />
     <Compile Remove="VTSPlugin.GodotEditor\**" />
     <Compile Remove="VTSPlugin.Godot\**" />
+    <Compile Remove="VTSPlugin.UniTask\**" />
     <Compile Remove="VTSPlugin.WPF\**" />
+    <EmbeddedResource Remove="VTSPlugin.API\**" />
     <EmbeddedResource Remove="VTSPlugin.Console\**" />
     <EmbeddedResource Remove="VTSPlugin.CSharp\**" />
     <EmbeddedResource Remove="VTSPlugin.GodotEditor\**" />
     <EmbeddedResource Remove="VTSPlugin.Godot\**" />
+    <EmbeddedResource Remove="VTSPlugin.UniTask\**" />
     <EmbeddedResource Remove="VTSPlugin.WPF\**" />
+    <None Remove="VTSPlugin.API\**" />
     <None Remove="VTSPlugin.Console\**" />
     <None Remove="VTSPlugin.CSharp\**" />
     <None Remove="VTSPlugin.GodotEditor\**" />
     <None Remove="VTSPlugin.Godot\**" />
+    <None Remove="VTSPlugin.UniTask\**" />
     <None Remove="VTSPlugin.WPF\**" />
   </ItemGroup>
 

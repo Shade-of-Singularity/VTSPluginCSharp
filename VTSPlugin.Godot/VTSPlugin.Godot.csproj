@@ -6,6 +6,7 @@
     <LangVersion>preview</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>VTSPlugin.Godot</RootNamespace>
+    <Configurations>UniTask-Debug;UniTask-Release;GDTask-Debug;GDTask-Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,8 +15,11 @@
     <PackageReference Include="GodotSharp" Version="4.7.2" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'GDTask-Release' Or '$(Configuration)' == 'GDTask-Debug'">
     <ProjectReference Include="..\VTSPlugin.CSharp\VTSPlugin.CSharp.csproj" />
+    <!--<None Include="..\VTSPlugin.API\**" Exclude="..\VTSPlugin.API\GlobalUsings.cs;..\VTSPlugin.API\obj\**;..\VTSPlugin.API\bin\**;..\VTSPlugin.API\*.md;..\VTSPlugin.API\*.csproj" />-->
+    <!--<Compile Include="..\VTSPlugin.API\**" Exclude="..\VTSPlugin.API\GlobalUsings.cs;..\VTSPlugin.API\obj\**;..\VTSPlugin.API\bin\**;..\VTSPlugin.API\*.md;..\VTSPlugin.API\*.csproj" />-->
+    <!--<EmbeddedResource Include="..\VTSPlugin.API\**" Exclude="..\VTSPlugin.API\GlobalUsings.cs;..\VTSPlugin.API\obj\**;..\VTSPlugin.API\bin\**;..\VTSPlugin.API\*.md;..\VTSPlugin.API\*.csproj" />-->
   </ItemGroup>
 
 </Project>

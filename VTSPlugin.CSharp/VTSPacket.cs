@@ -1,4 +1,6 @@
 ﻿using System.Text.Json.Serialization;
+using VTSPlugin;
+using VTSPlugin.Legacy;
 
 namespace VTSPlugin;
 

@@ -1,4 +1,4 @@
-﻿namespace VTSPlugin;
+﻿namespace VTSPlugin.Legacy;
 
 /// <summary>
 /// Marks an attribute which has a static instance field and never changes under normal circumstances.

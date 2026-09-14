@@ -1,4 +1,4 @@
-﻿namespace VTSPlugin;
+﻿namespace VTSPlugin.Legacy;
 
 public interface ITokenStorage
 {
