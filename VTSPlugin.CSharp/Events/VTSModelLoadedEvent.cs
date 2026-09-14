@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Metrics;
-using System.Text.Json.Serialization;
-using VTSPlugin.Legacy;
+﻿using System.Text.Json.Serialization;
 
 namespace VTSPlugin.Events;
 

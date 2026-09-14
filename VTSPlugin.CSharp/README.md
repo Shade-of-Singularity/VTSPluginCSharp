@@ -96,6 +96,9 @@ else
 Since Godot and Unity use different type of tasks - VTSPlugin.CSharp adapts by using aliases and conditional compilation.
 - In Godot - `GDTask` is used.
 - In Unity - `UniTask`.
-For this reason, all tasks are aliased under `AsyncTask` and its variations.
+To implement this, all tasks are surrounded with preprocessor arguments.
 
-You can see all the aliases at `VTSPlugin.CSharp\TaskAliases.cs`.
+This allows us to control which task is used, with a cost of making it tedious to expand the library.
+
+Note: If possible, will be better to write our own pre-processor, or in any other way replace a type of a task used to GDTask.
+For now we default to UniTask.

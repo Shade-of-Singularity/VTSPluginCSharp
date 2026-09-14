@@ -1,15 +1,16 @@
 ﻿using System.Text.Json.Serialization;
-using VTSPlugin;
-using VTSPlugin.Legacy;
 
 namespace VTSPlugin;
 
-public abstract class VTSPacket : VTSPacketData // Inherits associated functions.
+/// <summary>
+/// Base class for both request and response packet types.
+/// </summary>
+public abstract class VTSPacket : VTSPacketTemplate
 {
-    [JsonPropertyName(VTSPackets.APINameJsonPropertyName)] public virtual string? APIName { get; set; }
-    [JsonPropertyName(VTSPackets.APIVersionJsonPropertyName)] public virtual string? APIVersion { get; set; }
-    [JsonPropertyName(VTSPackets.MessageTypeJsonPropertyName)] public virtual string? MessageType { get; set; }
-    [JsonPropertyName(VTSPackets.RequestIDJsonPropertyName)] public virtual string? RequestID { get; set; }
+    [JsonPropertyName(VTSAPI.JsonPropertyNames.APIName)] public virtual string? APIName { get; set; }
+    [JsonPropertyName(VTSAPI.JsonPropertyNames.APIVersion)] public virtual string? APIVersion { get; set; }
+    [JsonPropertyName(VTSAPI.JsonPropertyNames.MessageType)] public virtual string? MessageType { get; set; }
+    [JsonPropertyName(VTSAPI.JsonPropertyNames.RequestID)] public virtual string? RequestID { get; set; }
 
     public override void Reset()
     {

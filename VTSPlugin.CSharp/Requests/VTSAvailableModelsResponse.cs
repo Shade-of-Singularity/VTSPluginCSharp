@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using VTSPlugin.Legacy;
+using VTSPlugin;
 
 namespace VTSPlugin.Requests;
 

@@ -1,7 +1,7 @@
-﻿namespace VTSPlugin.Legacy;
+﻿namespace VTSPlugin;
 
 /// <summary>
-/// All known Error IDs for <see cref="VTSPlugin.VTSResponseData.ErrorID"/>.
+/// All known Error IDs for <see cref="VTSResponseData.ErrorID"/>.
 /// </summary>
 /// <remarks>
 /// Wouldn't be possible without FomTarro's work on VTSCSharp!
@@ -11,28 +11,9 @@ public enum ErrorID
 {
     // Plugin errors
     /// <summary>
-    /// Used when request fails due to any reason, such as VTube Studio disconnecting, or plugin being removed, etc.
-    /// </summary>
-    /// <remarks>
-    /// Was introduced to allow us keeping Data fields initialized,
-    /// so <see cref="System.Text.Json.JsonSerializer"/> can directly populate the instance instead of creating a new one.
-    /// Might be removed in the future if we will Rent/Return data fields as well.
-    /// </remarks>
-    //RequestFailed = -XXX,
-    /// <summary>
-    /// Happens if deserializer used for parsing received packet signals back that deserialization failed, instead of throwing an exception.
-    /// Mainly used in <see cref="JsonResult.TryUnpack"/> and <see cref="JsonResult.TryUnpackScoped"/>.
-    /// </summary>
-    DeserializationFailed = -5,
-    /// <summary>
-    /// Happens if deserializer used for parsing received packet threw an exception.
-    /// Mainly used in <see cref="JsonResult.TryUnpack"/> and <see cref="JsonResult.TryUnpackScoped"/>.
-    /// </summary>
-    DeserializationException = -4,
-    /// <summary>
     /// Happens when a specified request times-out client-side.
     /// </summary>
-    RequestTimeout = -3,
+    RequestTimeout = -2,
 
     /// <summary>
     /// A default error id for request exceptions caused by internal code failures.

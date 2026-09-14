@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using VTSPlugin;
-using VTSPlugin.Legacy;
 
 namespace VTSPlugin.Legacy;
 
@@ -19,6 +17,11 @@ public static class VTSPackets
         type ??= typeof(T);
 
         try { return JsonSerializer.Serialize(obj, type, VTSAPI.JsonLoggingOptions); }
-        catch (Exception ex) { ex.Out($"Cannot serialize ({typeof(T)})\n"); return string.Empty; }
+        catch (Exception ex)
+        {
+            if (IVTSLogger.Default.ShouldLogException())
+                IVTSLogger.Default.Log(ex, $"Cannot serialize ({typeof(T)})\n");
+            return string.Empty;
+        }
     }
 }

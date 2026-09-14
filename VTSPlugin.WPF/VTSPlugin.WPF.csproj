@@ -21,7 +21,6 @@
 
   <ItemGroup Condition="'$(Configuration)' == 'UniTask-Release' Or '$(Configuration)' == 'UniTask-Debug'">
     <ProjectReference Include="..\VTSPlugin.CSharp\VTSPlugin.CSharp.csproj" />
-    <ProjectReference Include="..\VTSPlugin.UniTask\VTSPlugin.UniTask.csproj" />
     <!--<None Include="..\VTSPlugin.API\**" Exclude="..\VTSPlugin.API\GlobalUsings.cs;..\VTSPlugin.API\obj\**;..\VTSPlugin.API\bin\**;..\VTSPlugin.API\*.md;..\VTSPlugin.API\*.csproj" />-->
     <!--<Compile Include="..\VTSPlugin.API\**" Exclude="..\VTSPlugin.API\GlobalUsings.cs;..\VTSPlugin.API\obj\**;..\VTSPlugin.API\bin\**;..\VTSPlugin.API\*.md;..\VTSPlugin.API\*.csproj" />-->
     <!--<EmbeddedResource Include="..\VTSPlugin.API\**" Exclude="..\VTSPlugin.API\GlobalUsings.cs;..\VTSPlugin.API\obj\**;..\VTSPlugin.API\bin\**;..\VTSPlugin.API\*.md;..\VTSPlugin.API\*.csproj" />-->

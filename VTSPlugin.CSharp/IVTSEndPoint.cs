@@ -1,9 +1,10 @@
-﻿using System.Net;
+﻿using System.ComponentModel;
+using System.Net;
 using System.Net.WebSockets;
 
 namespace VTSPlugin;
 
-public interface IVTSEndPoint
+public interface IVTSEndPoint : INotifyPropertyChanged
 {
     /// <summary>
     /// Port on which VTube Studio instance communicates on.
@@ -35,7 +36,7 @@ public interface IVTSEndPoint
     /// <summary>
     /// Last tick when <see cref="KeepAlive"/> was used.
     /// </summary>
-    long LastKeepAliveTick { get; }
+    int LastKeepAliveTick { get; }
     /// <summary>
     /// Kills end-point and all associated 
     /// </summary>
