@@ -3,10 +3,20 @@
 namespace VTSPlugin;
 
 // TODO: Annotate.
-public abstract class VTSResponseTemplate : VTSPacket;
+public abstract class VTSResponseTemplate : VTSPacket
+{
+    /// <summary>
+    /// Time (UNIX millisecond) at which VTube Studio processed your request.
+    /// </summary>
+    [JsonPropertyName("timestamp")] public long Timestamp { get; set; }
+}
+
 public abstract class VTSResponse<TData> : VTSResponseTemplate where TData : VTSResponseData
 {
-    [JsonPropertyName("data")] public virtual TData? Data { get; set; }
+    /// <summary>
+    /// Data this response holds.
+    /// </summary>
+    [JsonPropertyName("data")] public TData? Data { get; set; }
 
     public override void Reset()
     {
@@ -18,7 +28,10 @@ public abstract class VTSResponse<TData> : VTSResponseTemplate where TData : VTS
 
 public class VTSResponse : VTSResponseTemplate
 {
-    [JsonPropertyName("data")] public virtual VTSResponseData? Data { get; set; }
+    /// <summary>
+    /// Data this response holds.
+    /// </summary>
+    [JsonPropertyName("data")] public VTSResponseData? Data { get; set; }
 
     public override void Reset()
     {

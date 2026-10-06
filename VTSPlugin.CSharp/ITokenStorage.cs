@@ -2,7 +2,10 @@
 
 namespace VTSPlugin;
 
-public interface ITokenStorage : IHasVTSLogger
+/// <summary>
+/// Interface for 
+/// </summary>
+public interface ITokenStorage : IService, IHasVTSLogger
 {
     /// <returns>
     /// A non-null string when token is found.

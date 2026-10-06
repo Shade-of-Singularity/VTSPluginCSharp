@@ -5,7 +5,7 @@ namespace VTSPlugin;
 /// <summary>
 /// Discovers new <see cref="IVTSEndPoint"/>s.
 /// </summary>
-public interface IVTSDiscoveryService
+public interface IVTSDiscoveryService : IHasVTSLogger
 {
     /// <summary>
     /// Port on which this <see cref="IVTSDiscoveryService"/> listens on.

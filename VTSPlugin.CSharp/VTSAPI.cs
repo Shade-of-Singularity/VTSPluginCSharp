@@ -5,16 +5,38 @@ using System.Text.Json.Serialization;
 
 namespace VTSPlugin;
 
+/// <summary>
+/// Stores common constants/settings used through-out the entirety of <see cref="VTSPlugin"/> library.
+/// </summary>
+/// <remarks>
+/// You can learn more about VTube Studio API itself in the official documentation: https://github.com/DenchiSoft/VTubeStudio
+/// </remarks>
 public static class VTSAPI
 {
     /// <summary>
     /// API Name that is used in <see cref="JsonPropertyNames.APIName"/> unless user overwrites it.
     /// </summary>
-    public const string DefaultAPIName = "VTubeStudioPublicAPI";
+    /// <remarks>
+    /// This is the only API Name defined in VTube Studio API: https://github.com/DenchiSoft/VTubeStudio
+    /// You can manually overwrite it for each request individually.
+    /// </remarks>
+    public static readonly string DefaultAPIName = "VTubeStudioPublicAPI";
     /// <summary>
     /// API Version to use in <see cref="JsonPropertyNames.APIVersion"/> unless user overwrites it.
     /// </summary>
-    public const string DefaultAPIVersion = "1.0";
+    /// <remarks>
+    /// This is the only API Version defined in VTube Studio API: https://github.com/DenchiSoft/VTubeStudio
+    /// You can manually overwrite it for each request individually.
+    /// </remarks>
+    public static readonly string DefaultAPIVersion = "1.0";
+    /// <summary>
+    /// Default port used for a discovery service.
+    /// </summary>
+    /// <remarks>
+    /// This port is defined in VTube Studio API.
+    /// See more: https://github.com/DenchiSoft/VTubeStudio#api-server-discovery-udp
+    /// </remarks>
+    public static readonly ushort DefaultDiscoveryPort = 47779;
     /// <summary>
     /// Json names for some top-level fields in Json data.
     /// </summary>

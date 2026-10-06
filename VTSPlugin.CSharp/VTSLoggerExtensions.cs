@@ -2,11 +2,14 @@
 
 namespace VTSPlugin;
 
+/// <summary>
+/// Useful extensions for when working with <see cref="IVTSLogger"/>s.
+/// </summary>
 public static class VTSLoggerExtensions
 {
-    const VTSLoggingLevel ExceptionLevel = VTSLoggingLevel.Error;
+    const VTSLoggingLevel DefaultExceptionLevel = VTSLoggingLevel.Error;
 
-    extension(IVTSLogger logger)
+    extension<T>(T logger) where T : IVTSLogger
     {
         /// <inheritdoc cref="IVTSLogger.Log(object?, object?, VTSLoggingLevel)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -14,51 +17,11 @@ public static class VTSLoggerExtensions
 
         /// <inheritdoc cref="IVTSLogger.Log(object?, object?, VTSLoggingLevel)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Log(Exception? exception, VTSLoggingLevel level = VTSLoggingLevel.Error) => logger.Log(exception, null, level);
+        public void Log(Exception? exception, VTSLoggingLevel level = DefaultExceptionLevel) => logger.Log(exception, null, level);
 
         /// <inheritdoc cref="IVTSLogger.Log(object?, object?, VTSLoggingLevel)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Log(Exception? exception, string? prefix, VTSLoggingLevel level = VTSLoggingLevel.Error) => logger.Log(exception, prefix, level);
-
-        /// <inheritdoc cref="IVTSLogger.Log(object?, object?, VTSLoggingLevel)"/>
-        /// <remarks>
-        /// If <see cref="IVTSLogger.LogLevel"/> is higher than <paramref name="level"/> - nothing is logged.
-        /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void TryLog(object? input, VTSLoggingLevel level = VTSLoggingLevel.Error)
-        {
-            if (logger.ShouldLog(level))
-                logger.Log(input, null, level);
-        }
-
-        /// <inheritdoc cref="IVTSLogger.Log(object?, object?, VTSLoggingLevel)"/>
-        /// <remarks>
-        /// If <see cref="IVTSLogger.LogLevel"/> is higher than <paramref name="level"/> - nothing is logged.
-        /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void TryLog(object? input, object? prefix, VTSLoggingLevel level = VTSLoggingLevel.Error)
-        {
-            if (logger.ShouldLog(level))
-                logger.Log(input, prefix, level);
-        }
-
-        /// <inheritdoc cref="IVTSLogger.Log(object?, object?, VTSLoggingLevel)"/>
-        /// <inheritdoc cref="TryLog(IVTSLogger, object?, VTSLoggingLevel)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void TryLog(Exception? exception, VTSLoggingLevel level = VTSLoggingLevel.Error)
-        {
-            if (logger.ShouldLog(level))
-                logger.Log(exception, null, level);
-        }
-
-        /// <inheritdoc cref="IVTSLogger.Log(object?, object?, VTSLoggingLevel)"/>
-        /// <inheritdoc cref="TryLog(IVTSLogger, object?, VTSLoggingLevel)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void TryLog(Exception? exception, object? prefix, VTSLoggingLevel level = VTSLoggingLevel.Error)
-        {
-            if (logger.ShouldLog(level))
-                logger.Log(exception, prefix, level);
-        }
+        public void Log(Exception? exception, string? prefix, VTSLoggingLevel level = DefaultExceptionLevel) => logger.Log(exception, prefix, level);
 
         /// <summary>
         /// <see cref="IVTSLogger.LogLevel"/> >= <see cref="VTSLoggingLevel.Trace"/>.
@@ -94,7 +57,7 @@ public static class VTSLoggerExtensions
         /// <see cref="IVTSLogger.LogLevel"/> >= <see cref="VTSLoggingLevel.Error"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool ShouldLogException() => logger.LogLevel >= ExceptionLevel;
+        public bool ShouldLogException() => logger.LogLevel >= DefaultExceptionLevel;
 
         /// <summary>
         /// <see cref="IVTSLogger.LogLevel"/> >= <see cref="VTSLoggingLevel.Error"/>.

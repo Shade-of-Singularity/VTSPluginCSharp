@@ -8,8 +8,8 @@ public sealed class ConsoleVTSLogger : IVTSLogger
 {
     public VTSLoggingLevel LogLevel
     {
-        get => (VTSLoggingLevel)InterlockedHelpers.Read(ref Unsafe.As<VTSLoggingLevel, int>(ref field));
-        set => Interlocked.Exchange(ref Unsafe.As<VTSLoggingLevel, int>(ref field), (int)value);
+        get => (VTSLoggingLevel)Volatile.Read(ref Unsafe.As<VTSLoggingLevel, int>(ref field));
+        set => Volatile.Write(ref Unsafe.As<VTSLoggingLevel, int>(ref field), (int)value);
     } = VTSLoggingLevel.Info;
 
 

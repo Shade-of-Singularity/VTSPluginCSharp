@@ -5,7 +5,8 @@ using System.Text.Json.Serialization.Metadata;
 namespace VTSPlugin
 {
     /// <summary>
-    /// Implementation extending <see cref="DefaultJsonTypeInfoResolver"/>, to skip any fields marked with <see langword="required"/> keyword.
+    /// Implementation extending <see cref="DefaultJsonTypeInfoResolver"/>,
+    /// to skip any fields marked with <see langword="required"/> keyword.
     /// </summary>
     /// <remarks>
     /// Provided, as for manual packet construction, the <see langword="required"/> keyword is quite useful.
@@ -13,7 +14,6 @@ namespace VTSPlugin
     /// </remarks>
     public sealed class VTSJsonTypeInfoResolver : DefaultJsonTypeInfoResolver
     {
-        public static readonly VTSJsonTypeInfoResolver Instance = new();
         public override JsonTypeInfo GetTypeInfo(Type type, JsonSerializerOptions options)
         {
             JsonTypeInfo info = base.GetTypeInfo(type, options);

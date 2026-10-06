@@ -1,18 +1,24 @@
-﻿namespace VTSPlugin;
+﻿using System.Runtime.CompilerServices;
+
+namespace VTSPlugin.Pooling;
 
 /// <summary>
-/// Default implementation for <see cref="VTSPacketPool.Shared"/> based on C#'s generics.
+/// Default implementation for <see cref="VTSPool.Shared"/> based on C#'s generics.
 /// </summary>
 /// <remarks>
 /// Uses C#'s application memory mapping directly (a.k.a. generics).
-/// Class should not be instantiated more than once.
+/// Class cannot not be instantiated more than once. Use <see cref="Instance"/> directly.
 /// </remarks>
-internal sealed class GenericVTSPacketPool : VTSPacketPool
+public sealed class GenericVTSPool : VTSPool
 {
-    public static readonly GenericVTSPacketPool Instance = new();
+    /// <summary>
+    /// Global <see cref="GenericVTSPool"/> implementation to be reused everywhere.
+    /// </summary>
+    public static readonly GenericVTSPool Instance = new();
+
     /// TODO: Might use implementation from: https://github.com/dotnet/dotnet/blob/main/src/aspnetcore/src/ObjectPool/src/DefaultObjectPool.cs
     /// Or: https://github.com/dotnet/dotnet/blob/b0f34d51fccc69fd334253924abd8d6853fad7aa/src/runtime/src/libraries/System.Collections.Concurrent/src/System/Collections/Concurrent/ConcurrentStack.cs
-    static class Pool<T> where T : VTSPacketData
+    static class Pool<T> where T : IVTSPoolable
     {
         public static int Capacity
         {
@@ -109,13 +115,27 @@ internal sealed class GenericVTSPacketPool : VTSPacketPool
     }
 
     /// <summary>
-    /// .ctor is made private so you can never instantiate <see cref="GenericVTSPacketPool"/> twice.
+    /// .ctor is made private so you can never instantiate <see cref="GenericVTSPool{T}"/> twice.
     /// </summary>
-    private GenericVTSPacketPool() { }
+    private GenericVTSPool() { }
 
+    /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetPoolCapacity<T>() => Pool<T>.Capacity;
+
+    /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void SetPoolCapacity<T>(int capacity) => Pool<T>.Capacity = capacity;
+
+    /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override T Rent<T>() => Pool<T>.Rent<T>();
+
+    /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override T Rent<T>(Func<T> ctor) => Pool<T>.Rent(ctor);
+
+    /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Return<T>(T packet) => Pool<T>.Return(packet);
 }

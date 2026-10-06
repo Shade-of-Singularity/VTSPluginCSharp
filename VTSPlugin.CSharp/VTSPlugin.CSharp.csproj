@@ -22,11 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="PolySharp" Version="1.16.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Text.Json" Version="10.0.11" />
+    <PackageReference Include="System.Text.Json" Version="10.0.12" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'GDTask-Release' Or '$(Configuration)' == 'GDTask-Debug'">

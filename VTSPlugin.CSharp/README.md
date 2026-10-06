@@ -27,7 +27,8 @@ Basic class for all request/response/event packet types.
 
 New packet instances can be created via `VTSPacketPool.Shared`, and `VTSPacket`s are reset when returned to the pool.
 
-Using `ToString` on all `VTSPackets` will return their JSON representation.
+Using `ToString` on all `VTSPackets` will return their readable representation.
+In v1 it will be JSON, but in further versions it will be custom low allocation encoder.
 
 ### `IVTSDiscoveryService`
 Responsible for listening on a VTube Studio broadcast UDP port `47779`.

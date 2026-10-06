@@ -35,9 +35,9 @@ public interface IVTSRequestManager
     /// Uses pre-computed request info instead of serializing a static instance.
     /// <para>
     /// When implementing this class properly, make sure to use <see cref="RuntimeHelpers.RunClassConstructor"/> on <typeparamref name="Y"/>.
-    /// This will register <see cref="IPrecomputableVTSRequest"/> to a precompute list.
+    /// This will register <see cref="IVTSPrecomputable"/> to a precompute list.
     /// </para>
     /// </remarks>
     /// <inheritdoc cref="Request{T}(VTSRequestTemplate, TimeSpan)"/>
-    UniTask<RequestResult<T>> Request<T, Y>(TimeSpan timeout) where T : VTSResponseData where Y : VTSRequestTemplate, IPrecomputableVTSRequest;
+    UniTask<RequestResult<T>> Request<T, Y>(TimeSpan timeout) where T : VTSResponseData where Y : VTSRequestTemplate, IVTSPrecomputable;
 }

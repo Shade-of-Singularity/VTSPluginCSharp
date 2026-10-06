@@ -2,8 +2,9 @@
 
 namespace VTSPlugin.Requests;
 
+[VTSPrecomputable]
 public sealed class VTSAPIStateRequest : VTSRequest
 {
-    public static readonly VTSAPIStateRequest Instance = new();
+    /// <inheritdoc/>
     [JsonPropertyName("messageType")] public override string? MessageType { get; set; } = "APIStateRequest";
 }

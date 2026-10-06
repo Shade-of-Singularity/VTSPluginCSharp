@@ -1,11 +1,11 @@
-﻿using System.Collections.Specialized;
+﻿using System.ComponentModel;
 
 namespace VTSPlugin;
 
 /// <summary>
 /// Information about the plugin.
 /// </summary>
-public interface IVTSPlugin : INotifyCollectionChanged
+public interface IVTSPlugin : INotifyPropertyChanged
 {
     public const string DefaultName = "Unknown";
     public const string DefaultAuthor = "Unknown";

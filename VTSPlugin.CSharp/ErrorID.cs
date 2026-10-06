@@ -1,7 +1,7 @@
 ﻿namespace VTSPlugin;
 
 /// <summary>
-/// All known Error IDs for <see cref="VTSResponseData.ErrorID"/>.
+/// All known Error IDs for <see cref="RequestResult{T}.ErrorID"/>.
 /// </summary>
 /// <remarks>
 /// Wouldn't be possible without FomTarro's work on VTSCSharp!

@@ -9,7 +9,7 @@ public interface IHasVTSLogger
     /// Logger to use for any logs and errors.
     /// </summary>
     /// <remarks>
-    /// If not provided - returns <see cref="IVTSLogger.Default"/>.
+    /// If not provided - should return <see cref="IVTSLogger.Default"/>.
     /// </remarks>
     public IVTSLogger Logger { get; }
 }

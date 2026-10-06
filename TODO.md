@@ -1,0 +1,18 @@
+Global TODO list for this library.
+- [ ] `VTSPlugin.CSharp`
+	- [ ] 
+- [ ] `VTSPlugin.Console`
+	- [ ] N/A (temporary)
+- [ ] `VTSPlugin.Unity`
+	- [ ] N/A (temporary)
+- [ ] `VTSPlugin.Godot`
+	- [ ] N/A (temporary)
+- [ ] `VTSPlugin.WPF`
+	- [ ] `ILogger` implementation.
+	- [ ] `IEndPoint` implementation.
+	- [ ] `IVTSService` implementation.
+	- [ ] `ITickService` implementation.
+	- [ ] `IVTSConnection` implementation.
+	- [ ] `IVTSPacketSerializer` implementation.
+		- [ ] Include precompute support.
+	- [ ] `IVTSDiscoveryService` implementation.
