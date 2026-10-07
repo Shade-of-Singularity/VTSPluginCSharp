@@ -27,7 +27,8 @@ public abstract class VTSPacket : VTSPacketTemplate
     /// <summary>
     /// Type of the message this packet describes.
     /// </summary>
-    [JsonPropertyName(VTSAPI.JsonPropertyNames.MessageType)] public string? MessageType { get; set; }
+    /// Note: <see langword="virtual"/>, so we can provide default <see cref="MessageType"/> for specific types.
+    [JsonPropertyName(VTSAPI.JsonPropertyNames.MessageType)] public virtual string? MessageType { get; set; }
 
     /// <summary>
     /// Unique Identifier for a request, produced with this packet.

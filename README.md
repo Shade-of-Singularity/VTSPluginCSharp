@@ -1,5 +1,5 @@
 # VTSPlugin
-Refreshed VTube Studio Plugin implementation for different environments.
+Refreshed VTube Studio Plugin implementation for different environments. 99% human-made.
 
 Libraries focus on:
 - Ease of use & development,
@@ -10,6 +10,11 @@ Libraries focus on:
 
 If you would like this library to move to LTS (Long Term Support) stage quicker - consider giving it a try, and leaving a feedback.
 It will motivate us, and show that there's a demand for finalizing the library.
+
+# Limitations
+1. AOT (Ahead of time) compilation is not supported.
+    - For Unity projects, this means that you cannot publish your app with IL2CPP preset.
+    - Same for Godot. AOT is not supported yet.
 
 # Features
 1. Simple in use API featuring `async` methods.
@@ -71,7 +76,7 @@ Thanks to their amazing work for years, a lot of plugins people are using every 
 VBridger, T.I.T.S, VTS-Heartrate, and so many more!
 
 Their work is amazing, and the API is very clean!
-Consider giving them a star on GitHub! **Their work deserves it**.
+Consider giving them a star on GitHub! Their work deserves it.
 https://github.com/FomTarro/VTS-Sharp
 
 ## TomaszRewak / C# Stack only JSON parser

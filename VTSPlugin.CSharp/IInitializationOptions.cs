@@ -10,4 +10,4 @@ namespace VTSPlugin;
 /// <remarks>
 /// Implements <see cref="INotifyPropertyChanged"/>, despite usually being immutable, to avoid memory leaks in WPF.
 /// </remarks>
-public interface IInitializationOptions : INotifyPropertyChanged, IVTSPoolable;
+public interface IInitializationOptions : INotifyPropertyChanged, IVTSPoolable, IFreezable;

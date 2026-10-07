@@ -5,6 +5,10 @@ It outlines overall architecture which all the other libraries will have to foll
 
 API is defined via the interfaces, but libraries can choose to optimize specific use cases via interface devirtualization.
 
+Library also handles concurrency, but it uses locks for this.
+Future updates will optimize access to shared data in concurrent contexts are new ideas for this arise.
+Feel free to suggest your own as well.
+
 # Architecture
 High-level architecture is simple:
 TODO: Simplify the descriptions.

@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using System.Runtime.CompilerServices;
 
 namespace VTSPlugin;
 
@@ -17,6 +16,11 @@ public interface IVTSRequestManager
     /// if VTube Studio is disconnected, or if any other issues occur.
     /// </para>
     /// </summary>
+    /// <remarks>
+    /// <paramref name="request"/> is encoded immediately, before <see cref="UniTask"/> state machine returns.
+    /// This makes it possible for a caller to immediately release back <paramref name="request"/>
+    /// to <see cref="Pooling.VTSPool"/>, or any other pooling abstract.
+    /// </remarks>
     /// <typeparam name="T">Type of response to expect to receive.</typeparam>
     /// <param name="request"><see cref="VTSRequest"/> to send.</param>
     /// <param name="timeout">
@@ -30,14 +34,4 @@ public interface IVTSRequestManager
     /// </returns>
     /// <exception cref="ArgumentNullException"><paramref name="request"/> is <see langword="null"/></exception>
     UniTask<RequestResult<T>> Request<T>(VTSRequestTemplate request, TimeSpan timeout) where T : VTSResponseData;
-
-    /// <remarks>
-    /// Uses pre-computed request info instead of serializing a static instance.
-    /// <para>
-    /// When implementing this class properly, make sure to use <see cref="RuntimeHelpers.RunClassConstructor"/> on <typeparamref name="Y"/>.
-    /// This will register <see cref="IVTSPrecomputable"/> to a precompute list.
-    /// </para>
-    /// </remarks>
-    /// <inheritdoc cref="Request{T}(VTSRequestTemplate, TimeSpan)"/>
-    UniTask<RequestResult<T>> Request<T, Y>(TimeSpan timeout) where T : VTSResponseData where Y : VTSRequestTemplate, IVTSPrecomputable;
 }

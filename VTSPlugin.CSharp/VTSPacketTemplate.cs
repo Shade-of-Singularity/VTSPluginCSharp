@@ -13,16 +13,7 @@ public abstract class VTSPacketTemplate : IVTSPoolable
     /// (Behaviour might be re-implemented via <see cref="System.Text.StringBuilder"/> and manual serialization)
     /// </remarks>
     /// <inheritdoc/>
-    public override string ToString()
-    {
-        try { return JsonSerializer.Serialize(this, GetType(), VTSAPI.JsonLoggingOptions); }
-        catch (Exception ex)
-        {
-            if (IVTSLogger.Default.ShouldLogException())
-                IVTSLogger.Default.Log(ex, $"Cannot serialize ({GetType()})!\n");
-            return base.ToString();
-        }
-    }
+    public override string ToString() => this.ToLoggingString();
 
     /// <inheritdoc/>
     public virtual void Reset() { }

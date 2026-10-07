@@ -10,14 +10,20 @@ namespace VTSPlugin;
 public interface IService<T> : IService where T : IInitializationOptions
 {
     /// <summary>
+    /// Last options, used for service initialization.
+    /// Resets when the service is terminated.
+    /// </summary>
+    /// <remarks>
+    /// Options are frozen as soon as you pass them in <see cref="Initialize(T)"/> method.
+    /// Unfreezing them to modify leads to undefined behaviour!
+    /// </remarks>
+    T? Options { get; }
+    /// <summary>
     /// Initializes the service with provided <paramref name="options"/>.
     /// <para>
     /// In concurrent environments, will wait until <see cref="IService.Terminate"/> quits, and then will attempt initialization.
     /// </para>
     /// </summary>
-    /// <remarks>
-    /// You should not assume
-    /// </remarks>
     UniTask<bool> Initialize(T options);
 }
 

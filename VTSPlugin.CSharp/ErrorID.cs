@@ -3,18 +3,17 @@
 /// <summary>
 /// All known Error IDs for <see cref="RequestResult{T}.ErrorID"/>.
 /// </summary>
-/// <remarks>
-/// Wouldn't be possible without FomTarro's work on VTSCSharp!
-/// Go give them a star on GitHub! https://github.com/FomTarro/VTS-Sharp/tree/main
-/// </remarks>
 public enum ErrorID
 {
     // Plugin errors
     /// <summary>
+    /// Happens when VTube Studio app is closed, which you wait for it to send you back a message.
+    /// </summary>
+    VTubeStudioDisconnected = -4,
+    /// <summary>
     /// Happens when a specified request times-out client-side.
     /// </summary>
-    RequestTimeout = -2,
-
+    RequestTimeout = -3,
     /// <summary>
     /// A default error id for request exceptions caused by internal code failures.
     /// </summary>
@@ -22,7 +21,7 @@ public enum ErrorID
     /// Usually the exception itself will be output to the logs.
     /// Error message may or may not be provided - there is no guarantees here, but you can still check if ErrorMessage exists.
     /// </remarks>
-    ClientSideException = -1,
+    ClientSideException = -2,
 
     /// <summary>
     /// Default value for most return values.
