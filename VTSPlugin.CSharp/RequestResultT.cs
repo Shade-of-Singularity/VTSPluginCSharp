@@ -25,6 +25,7 @@ public readonly ref partial struct TestStackData : IEquatable<TestStackData>
 	public static bool operator !=(TestStackData a, TestStackData b) => a.raw != b.raw;
 }
 
+// P.S.: we will definitely need some tests to ensure that library is reliable.
 public static class HandlerUsage
 {
 	/// TODO: Missing a way to identify delegate-only events.
@@ -48,7 +49,14 @@ public static class HandlerUsage
 		}, static (state, id, message) => IVTSLogger.Default.LogError($"{id}: {message}"));
 
 		// Async-based request.
-		var result = await APIRequestAsync();
+		// Note: We can add a way to turn regular data holder in a local struct.
+		// This will allow us to unpack and immediately release the data holder.
+		// However, this is a very unreliable optimization. Best case scenario will
+		
+		// Note: if you know what you are doing, you can omit the `using` block.
+		// If it fails - it will only let GC to eventually collect non-disposed data instance.
+		// Program itself will run safely, just sub-optimally for a while.
+		using var result = await APIRequestAsync();
 		if (result.IsSuccessful(out var data))
 		{
 			IVTSLogger.Default.LogInfo($"{data}");
@@ -57,9 +65,10 @@ public static class HandlerUsage
 		{
 			IVTSLogger.Default.LogError($"{result.ErrorID}: {result.ErrorMessage}");
 		}
-		result.Dispose();
 
 		// Stack-only delegate-based request.
+		// Note: we might introduce API to turn use stack-only to fill-in class-based data holders.
+		// This will allow storing request results long-term, for better or for worse, or move results around in async context.
 		StackAPIRequest(static (ref reader) =>
 		{
 			TestStackData data = new(ref reader);
