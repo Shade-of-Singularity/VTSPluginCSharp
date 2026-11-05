@@ -68,13 +68,21 @@ public static class VTSLoggerExtensions
 
 
 
+        /// Not really different from a direct call to <see cref="Log"/>, but we keep it in case we change the implementation.
         /// <inheritdoc cref="IVTSLogger.Log(object?, object?, VTSLoggingLevel)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Log(Exception? exception, VTSLoggingLevel level = DefaultExceptionLevel) => logger.Log(exception, null, level);
+        public void LogException(Exception? exception, VTSLoggingLevel level = DefaultExceptionLevel)
+        {
+            logger.Log(exception, null, level);
+        }
 
+        /// Not really different from a direct call to <see cref="Log"/>, but we keep it in case we change the implementation.
         /// <inheritdoc cref="IVTSLogger.Log(object?, object?, VTSLoggingLevel)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Log(Exception? exception, string? prefix, VTSLoggingLevel level = DefaultExceptionLevel) => logger.Log(exception, prefix, level);
+        public void LogException(Exception? exception, string? prefix, VTSLoggingLevel level = DefaultExceptionLevel)
+        {
+            logger.Log(exception, prefix, level);
+        }
 
 
 

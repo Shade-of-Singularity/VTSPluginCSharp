@@ -11,5 +11,5 @@ public interface IHasVTSLogger
     /// <remarks>
     /// If not provided - should return to <see cref="IVTSLogger.Default"/> instead.
     /// </remarks>
-    public IVTSLogger Logger { get; }
+    public IVTSLogger Logger { get; set; }
 }

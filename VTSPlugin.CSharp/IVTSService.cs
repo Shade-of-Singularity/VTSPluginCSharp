@@ -1,30 +1,54 @@
 ﻿namespace VTSPlugin;
 
 /// <summary>
+/// Initialization options for <see cref="IVTSService"/>.
+/// </summary>
+public interface IVTSServiceInitializationOptions : IVTSInitializationOptions
+{
+    /// <summary>
+    /// Initial plugin info to use when communicating with remote VTube Studio app.
+    /// </summary>
+    IVTSPlugin Plugin { get; }
+    /// <summary>
+    /// Initial token storage to use for buffering and serializing authentication tokens.
+    /// </summary>
+    IVTSTokenStorage TokenStorage { get; }
+    /// <summary>
+    /// Initial discovery service to use for tracking new VTube Studio app instances.
+    /// </summary>
+    IVTSDiscoveryService DiscoveryService { get; }
+    /// <summary>
+    /// Preference for treating new VTube Studio instances.
+    /// </summary>
+    VTSConnectionPreference ConnectionPreference { get; }
+    /// <summary>
+    /// Whether to authenticate new connections, even if <see cref="ConnectionPreference"/> will otherwise ignore it.
+    /// </summary>
+    bool MaintainNewConnections { get; }
+}
+
+/// <summary>
 /// Initializes communication with VTube Studio using <see cref="IVTSEndPoint"/>s.
 /// </summary>
 /// <remarks>
 /// This service will automatically connect to the latest found <see cref="IVTSEndPoint"/>, and authenticate.
 /// Also inherits <see cref="IVTSConnection"/> API, allowing you to send requests by using the service directly.
 /// </remarks>
-public interface IVTSService : IVTSRequestManager
+public interface IVTSService : IVTSSubSystem<IVTSServiceInitializationOptions>, IHasVTSLogger, IVTSRequestManager
 {
     /// <summary>
-    /// Plugin info to use for authentication.
+    /// Plugin info to use when communicating with remote VTube Studio app.
+    /// Initially provided by <see cref="IVTSServiceInitializationOptions.Plugin"/>.
     /// </summary>
-    /// TODO: Maybe instead we can allow one service to control multiple plugins?
-    ///  This is way better than asking devs to create an entire service for each plugin.
-    /// For that we will likely need an abstract, or use <see cref="IVTSPlugin"/> itself as an abstract,
-    ///  responsible for communicating plugin info via <see cref="IVTSConnection"/>.
-    /// This, however, will mean that <see cref="IVTSConnection"/> won't be able to have a plugin field,
-    ///  so authentication will have to be external... I don't like this.
-    IVTSPlugin Plugin { get; }
+    IVTSPlugin? Plugin { get; }
     /// <summary>
-    /// Discovery service this <see cref="IVTSStudio"/> tracks.
+    /// Token storage to use for buffering and serializing authentication tokens.
+    /// Initially provided by <see cref="IVTSServiceInitializationOptions.TokenStorage"/>.
     /// </summary>
-    IVTSDiscoveryService DiscoveryService { get; }
+    IVTSTokenStorage? TokenStorage { get; }
     /// <summary>
-    /// Settings, used with this service. Read-only.
+    /// Discovery service to use for tracking new VTube Studio app instances.
+    /// Initially provided by <see cref="IVTSServiceInitializationOptions.DiscoveryService"/>.
     /// </summary>
-    VTSServiceSettings Settings { get; }
+    IVTSDiscoveryService? DiscoveryService { get; }
 }

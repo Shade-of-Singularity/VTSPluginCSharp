@@ -59,8 +59,7 @@ public sealed class VTSJsonTypeInfoResolver : DefaultJsonTypeInfoResolver
             }
             catch (Exception ex)
             {
-                if (IVTSLogger.Default.ShouldLogException())
-                    IVTSLogger.Default.Log(ex, $"[{nameof(VTSJsonTypeInfoResolver)}]");
+                IVTSLogger.Default.LogException(ex, $"[{nameof(VTSJsonTypeInfoResolver)}]");
             }
         }
         return info;

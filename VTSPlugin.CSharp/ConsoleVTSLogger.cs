@@ -10,63 +10,103 @@ namespace VTSPlugin;
 /// System console-based implementation for <see cref="IVTSLogger"/>.
 /// Works always, but after initialization - also manages a log file.
 /// </summary>
-public sealed class ConsoleVTSLogger : IVTSLogger
+public sealed class ConsoleVTSLogger : IVTSLogger<IVTSLoggerInitializationOptions>
 {
-    public VTSLoggingLevel LogLevel
-    {
-        get => (VTSLoggingLevel)Volatile.Read(ref Unsafe.As<VTSLoggingLevel, int>(ref field));
-        set => Volatile.Write(ref Unsafe.As<VTSLoggingLevel, int>(ref field), (int)value);
-    } = VTSLoggingLevel.Info;
+	public VTSLoggingLevel LogLevel
+	{
+		get => (VTSLoggingLevel)Volatile.Read(ref Unsafe.As<VTSLoggingLevel, int>(ref field));
+		set => Volatile.Write(ref Unsafe.As<VTSLoggingLevel, int>(ref field), (int)value);
+	} = VTSLoggingLevel.Info;
 
-    public IVTSLoggerInitializationOptions Options => throw new NotImplementedException();
+	public IVTSLoggerInitializationOptions Options { get; private set; }
+	public bool IsInitialized { get; private set; }
 
-    public bool IsInitialized => throw new NotImplementedException();
+#if NOTIFY_CHANGED
+	public event PropertyChangedEventHandler? PropertyChanged;
+#endif
 
-    readonly ConcurrentStack<StringBuilder> Builders = new();
+	[ThreadStatic]
+	static StringBuilder? Builder;
+	SpinLock Lock = new();
 
-    public event PropertyChangedEventHandler? PropertyChanged;
+	/// <inheritdoc/>
+	public void Log(object? input, object? prefix, VTSLoggingLevel level)
+	{
+		StringBuilder? builder = Builder;
+		if (builder is null)
+		{
+			builder = new();
+			Builder = builder;
+		}
+		else builder.Clear();
 
-    public void Log(object? input, object? prefix, VTSLoggingLevel level)
-    {
-        StringBuilder builder = AcquireBuilder();
-        try
-        {
-            //ConsoleColor last = Console.ForegroundColor;
-            //Console.ForegroundColor = color;
+		// Appends prefix as well.
+		// Might be messy, but I don't mind.
 
-            //builder.Clear();
-            //if (prefix is not null)
-            //{
-            //    builder.Append(prefix);
-            //    if (!prefix.EndsWith(' ') && !prefix.EndsWith('\t'))
-            //        builder.Append(' ');
-            //}
-            //builder.Append((obj ?? "null").ToString());
-            //string final = builder.ToString();
-            //builder.Clear();
+		// Special logging prefix for exceptions.
+		if (input is Exception ex)
+		{
+			Append(builder, ex);
+			static void Append(StringBuilder builder, Exception ex)
+			{
+				builder.Append(ex.GetType());
+				builder.Append(": ");
+				builder.AppendLine(ex.Message);
+				builder.Append(ex.StackTrace);
+				var inner = ex.InnerException;
+				if (inner is not null)
+				{
+					Append(builder, inner);
+				}
+			}
+		}
+		else
+		{
+			builder.Append(input);
+		}
 
-            //Console.WriteLine(final);
-            //Console.ForegroundColor = last;
-            //LoggerService.Instance.Log(final);
-        }
-        //catch (Exception ex) { Console.WriteLine(ex.ToDisplay()); }
-        finally { ReturnBuilder(builder); }
-        throw new NotImplementedException();
-    }
+		// Tries to log to a file.
+		try
+		{
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    StringBuilder AcquireBuilder() => Builders.TryPop(out var builder) ? builder : new();
+		}
+		catch (Exception ex)
+		{
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    void ReturnBuilder(StringBuilder builder) => Builders.Push(builder);
+		}
 
-    public UniTask<bool> Initialize()
-    {
-        throw new NotImplementedException();
-    }
 
-    public UniTask<bool> Terminate()
-    {
-        throw new NotImplementedException();
-    }
+		//ConsoleColor last = Console.ForegroundColor;
+		//Console.ForegroundColor = color;
+
+		//builder.Clear();
+		//if (prefix is not null)
+		//{
+		//    builder.Append(prefix);
+		//    if (!prefix.EndsWith(' ') && !prefix.EndsWith('\t'))
+		//        builder.Append(' ');
+		//}
+		//builder.Append((obj ?? "null").ToString());
+		//string final = builder.ToString();
+		//builder.Clear();
+
+
+		//Console.WriteLine(final);
+		//Console.ForegroundColor = last;
+		//LoggerService.Instance.Log(final);
+		throw new NotImplementedException();
+	}
+
+	public UniTask<bool> Initialize() => Initialize(IVTSLoggerInitializationOptions.Default);
+	public UniTask<bool> Terminate()
+	{
+		IsInitialized = false;
+		Options = null;
+	}
+
+	public UniTask<bool> Initialize(IVTSLoggerInitializationOptions options)
+	{
+		Options = options;
+		IsInitialized = true;
+	}
 }

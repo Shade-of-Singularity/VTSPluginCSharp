@@ -6,6 +6,7 @@ namespace VTSPlugin;
 /// <summary>
 /// Base class for both <see cref="VTSPacket"/>s and their data entries (<see cref="VTSPacketData"/>)
 /// </summary>
+/// TODO: Consider adding a release method, releasing the instance back to the pool from which it was retrieved.
 public abstract class VTSPacketTemplate : IVTSPoolable
 {
     /// <remarks>

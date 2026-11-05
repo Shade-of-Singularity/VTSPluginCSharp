@@ -8,11 +8,10 @@
     <LangVersion>preview</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>VTSPlugin.Console</RootNamespace>
-    <Configurations>UniTask-Debug;UniTask-Release;GDTask-Debug;GDTask-Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VTSPlugin.CSharp\VTSPlugin.CSharp.csproj" />
+		<ProjectReference Include="..\VTSPlugin.CSharp\VTSPlugin.csproj" />
   </ItemGroup>
 
 </Project>

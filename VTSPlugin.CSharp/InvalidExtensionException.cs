@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace VTSPlugin;
 
 /// <summary>
-/// Thrown when you provide wrong extensions in <see cref="IInitializationOptions"/>.
+/// Thrown when you provide wrong extensions in <see cref="IVTSInitializationOptions"/>.
 /// Mainly - in <see cref="IVTSLoggerInitializationOptions"/>.
 /// </summary>
 [Serializable]

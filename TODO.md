@@ -1,6 +1,7 @@
 Global TODO list for this library.
-- [ ] `VTSPlugin.CSharp`
-	- [ ] 
+- [ ] `VTSPlugin`
+	- [ ] Make all parts of code allow supplying a nullable `IVTSLogger` by a caller.
+	- [ ] Finish `ConcurrentFileTokenStorage.cs`.
 - [ ] `VTSPlugin.Console`
 	- [ ] N/A (temporary)
 - [ ] `VTSPlugin.Unity`
@@ -8,10 +9,10 @@ Global TODO list for this library.
 - [ ] `VTSPlugin.Godot`
 	- [ ] N/A (temporary)
 - [ ] `VTSPlugin.WPF`
-	- [ ] `ILogger` implementation.
-	- [ ] `IEndPoint` implementation.
+	- [ ] `IVTSLogger` implementation.
+	- [ ] `IVTSEndPoint` implementation.
 	- [ ] `IVTSService` implementation.
-	- [ ] `ITickService` implementation.
+	- [ ] `IVTSTickService` implementation.
 	- [ ] `IVTSConnection` implementation.
 	- [ ] `IVTSPacketSerializer` implementation.
 		- [ ] Include precompute support.

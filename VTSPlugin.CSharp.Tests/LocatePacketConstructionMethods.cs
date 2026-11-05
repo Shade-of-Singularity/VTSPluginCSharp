@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace VTSPlugin.CSharp.Tests;
+namespace VTSPlugin.Tests;
 
 [TestClass]
 public sealed class LocatePacketConstructionMethods

@@ -1,9 +1,9 @@
 ﻿namespace VTSPlugin;
 
 /// <summary>
-/// Initialization options for <see cref="ITickService"/>.
+/// Initialization options for <see cref="IVTSTickService"/>.
 /// </summary>
-public interface ITickServiceInitializationOptions : IInitializationOptions
+public interface IVTSTickServiceInitializationOptions : IVTSInitializationOptions
 {
     /// <summary>
     /// Logger to log the info to.

@@ -7,6 +7,7 @@
 /// Uses C#'s application memory mapping directly (a.k.a. generics).
 /// Class should not be instantiated more than once.
 /// </remarks>
+/// TODO: Consider using <see cref="STAThreadAttribute"/> to localize storage to each thread.
 internal sealed class GenericResettableCompletionSourcePool : ResettableCompletionSourcePool
 {
     public static readonly GenericResettableCompletionSourcePool Instance = new();

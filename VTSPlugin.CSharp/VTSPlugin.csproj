@@ -1,0 +1,117 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsAotCompatible>false</IsAotCompatible>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>VTSPlugin</RootNamespace>
+		<Description>High-performance async library for communicating with VTube Studio.</Description>
+		<Copyright>Shade of Singularity (SoG), 2026</Copyright>
+		<Authors>SoG, DarkJune</Authors>
+		<SignAssembly>False</SignAssembly>
+  </PropertyGroup>
+
+	<!--Common dependencies-->
+	<ItemGroup>
+		<PackageReference Include="PolySharp" Version="1.16.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="StackOnlyJsonParser" Version="1.2.0" />
+		<PackageReference Include="System.Text.Json" Version="10.0.12" />
+	</ItemGroup>
+
+	<!--Godot-->
+	<PropertyGroup Condition="'$(TargetEnvironment)' == 'Godot'">
+		<Title>VTS Plugin (Godot)</Title>
+		<AssemblyName>VTSPlugin.Godot</AssemblyName>
+		<TargetFramework>net8.0</TargetFramework>
+	</PropertyGroup>
+	<ItemGroup Condition="'$(TargetEnvironment)' == 'Godot'">
+		<PackageReference Include="GDTask" Version="3.2.1" />
+		<PackageReference Include="Godot.SourceGenerators" Version="4.7.2" />
+		<PackageReference Include="GodotSharp" Version="4.7.2" />
+	</ItemGroup>
+
+	<!--Unity-->
+	<Choose>
+		<When Condition="'$(TargetEnvironment)' == 'Unity'">
+			<PropertyGroup>
+				<Title>VTS Plugin (Unity)</Title>
+				<TargetFramework>netstandard2.1</TargetFramework>
+				<AssemblyName>VTSPlugin.Unity</AssemblyName>
+			</PropertyGroup>
+			<ItemGroup>
+				<PackageReference Include="UniTask" Version="2.5.11" />
+			</ItemGroup>
+		</When>
+	</Choose>
+
+	<!--WPF-->
+	<Choose>
+		<When Condition="'$(TargetEnvironment)' == 'WPF'">
+			<PropertyGroup>
+				<Title>VTS Plugin (WPF)</Title>
+				<TargetFramework>net9.0</TargetFramework>
+				<AssemblyName>VTSPlugin.WPF</AssemblyName>
+				<!--Disabled for now, unless truly needed, so devs won't need to depend WindowsForms-->
+				<!--<UseWindowsForms>true</UseWindowsForms>-->
+				<UseWPF>true</UseWPF>
+			</PropertyGroup>
+			<ItemGroup>
+				<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+				<PackageReference Include="UniTask" Version="2.5.11" />
+			</ItemGroup>
+		</When>
+	</Choose>
+
+	<!--Console-->
+	<Choose>
+		<When Condition="'$(TargetEnvironment)' == 'Console'">
+			<PropertyGroup>
+				<Title>VTS Plugin (Console)</Title>
+				<TargetFramework>netstandard2.1</TargetFramework>
+				<AssemblyName>VTSPlugin.Console</AssemblyName>
+			</PropertyGroup>
+			<ItemGroup>
+				<PackageReference Include="UniTask" Version="2.5.11" />
+			</ItemGroup>
+		</When>
+	</Choose>
+
+	<!--Any-->
+	<Choose>
+		<When Condition="'$(TargetEnvironment)' == 'Any'">
+			<PropertyGroup>
+				<Title>VTS Plugin (Any)</Title>
+				<TargetFramework>netstandard2.1</TargetFramework>
+				<AssemblyName>VTSPlugin</AssemblyName>
+			</PropertyGroup>
+			<ItemGroup>
+				<PackageReference Include="UniTask" Version="2.5.11" />
+			</ItemGroup>
+		</When>
+	</Choose>
+
+	<ItemGroup>
+		<Compile Remove="VTSPlugin.WPF\**" />
+		<Compile Remove="VTSPlugin.Unity\**" />
+		<Compile Remove="VTSPlugin.Godot\**" />
+		<EmbeddedResource Remove="VTSPlugin.WPF\**" />
+		<EmbeddedResource Remove="VTSPlugin.Unity\**" />
+		<EmbeddedResource Remove="VTSPlugin.Godot\**" />
+		<None Remove="VTSPlugin.WPF\**" />
+		<None Remove="VTSPlugin.Unity\**" />
+		<None Remove="VTSPlugin.Godot\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Unity\" />
+	  <Folder Include="Console\" />
+	  <Folder Include="Godot\" />
+	  <Folder Include="WPF\" />
+	</ItemGroup>
+  
+</Project>

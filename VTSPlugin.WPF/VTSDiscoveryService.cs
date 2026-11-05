@@ -29,7 +29,7 @@ namespace VTSPlugin.Legacy;
 /// 4. Update list of valid end-points.
 /// 5. Invalidate existing end-points.
 /// 6. Do NOT dispatch events to UI thread (reduces other thread's waiting period).
-public sealed partial class VTSDiscoveryService : ObservableObject, IService
+public sealed partial class VTSDiscoveryService : ObservableObject, IVTSSubSystem
 {
     public const ushort DefaultVTubeStudioDiscoveryPort = 47779;
     public const double DefaultRestartDelay = 2;

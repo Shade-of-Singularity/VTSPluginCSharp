@@ -115,7 +115,7 @@ public sealed class GenericVTSPool : VTSPool
     }
 
     /// <summary>
-    /// .ctor is made private so you can never instantiate <see cref="GenericVTSPool{T}"/> twice.
+    /// .ctor is made private so you can never instantiate <see cref="GenericVTSPool"/> twice.
     /// </summary>
     private GenericVTSPool() { }
 

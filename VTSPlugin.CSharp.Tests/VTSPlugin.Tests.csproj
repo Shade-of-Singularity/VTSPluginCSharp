@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VTSPlugin.CSharp\VTSPlugin.CSharp.csproj" />
+    <ProjectReference Include="..\VTSPlugin.CSharp\VTSPlugin.csproj" />
   </ItemGroup>
 
   <ItemGroup>

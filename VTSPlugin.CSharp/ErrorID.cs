@@ -7,9 +7,9 @@ public enum ErrorID
 {
     // Plugin errors
     /// <summary>
-    /// Happens when VTube Studio app is closed, which you wait for it to send you back a message.
+    /// Happens when VTube Studio app is closed while you wait for the request, or if it wasn't connected in the first place.
     /// </summary>
-    VTubeStudioDisconnected = -4,
+    VTubeStudioOffline = -4,
     /// <summary>
     /// Happens when a specified request times-out client-side.
     /// </summary>
@@ -24,7 +24,8 @@ public enum ErrorID
     ClientSideException = -2,
 
     /// <summary>
-    /// Default value for most return values.
+    /// (<c>-1</c>) Indicates no issues.
+    /// Default <see cref="ErrorID"/> for all successful operations.
     /// </summary>
     None = -1,
 

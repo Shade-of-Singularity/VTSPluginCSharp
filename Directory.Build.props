@@ -4,13 +4,44 @@
 		<AssemblyVersion>$(Version)</AssemblyVersion>
 		<PackageVersion>$(Version)</PackageVersion>
 		<Copyright>Shade of Singularity (SoG)</Copyright>
+		<Configurations>
+			Debug;Release;GodotDebug;GodotRelease;ConsoleDebug;ConsoleRelease;UnityDebug;UnityRelease;WPFDebug;WPFRelease
+		</Configurations>
 	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'GDTask-Debug' Or '$(Configuration)' == 'GDTask-Release'">
-    <DefineConstants>GDTask</DefineConstants>
-  </PropertyGroup>
+	<!--UNITY_2017_1_OR_NEWER is here, because it's the most common UNITY compiler definition-->
+	<!--We can replace it with just UNITY, if we find a way to define it when user imports lib in Unity Editor-->
+	<PropertyGroup Condition="'$(Configuration)' == 'UnityDebug' Or '$(Configuration)' == 'UnityRelease'">
+		<DefineConstants>UniTask,UNITY_2017_1_OR_NEWER</DefineConstants>
+		<TargetEnvironment>Unity</TargetEnvironment>
+		<AsyncTask>UniTask</AsyncTask>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'UniTask-Debug' Or '$(Configuration)' == 'UniTask-Release'">
-    <DefineConstants>UniTask</DefineConstants>
-  </PropertyGroup>
+	<!--Defines UI callbacks mostly-->
+	<PropertyGroup Condition="'$(Configuration)' == 'WPFDebug' Or '$(Configuration)' == 'WPFRelease'">
+		<DefineConstants>UniTask,WPF,NOTIFY_CHANGES</DefineConstants>
+		<TargetEnvironment>WPF</TargetEnvironment>
+		<AsyncTask>UniTask</AsyncTask>
+	</PropertyGroup>
+
+	<!--Redefines a task, used for carrying the info-->
+	<PropertyGroup Condition="'$(Configuration)' == 'GodotDebug' Or '$(Configuration)' == 'GodotRelease'">
+		<DefineConstants>GDTask,GODOT</DefineConstants>
+		<TargetEnvironment>Godot</TargetEnvironment>
+		<AsyncTask>GDTask</AsyncTask>
+	</PropertyGroup>
+
+	<!--High-performance headless version. As bare-bones as it can get-->
+	<PropertyGroup Condition="'$(Configuration)' == 'ConsoleDebug' Or '$(Configuration)' == 'ConsoleRelease'">
+		<DefineConstants>UniTask</DefineConstants>
+		<TargetEnvironment>Console</TargetEnvironment>
+		<AsyncTask>UniTask</AsyncTask>
+	</PropertyGroup>
+
+	<!--Note: regular environment should be a fallback - hence there's no checks for the enviroment-->
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug' Or '$(Configuration)' == 'Release'">
+		<DefineConstants>UniTask</DefineConstants>
+		<TargetEnvironment>Any</TargetEnvironment>
+		<AsyncTask>UniTask</AsyncTask>
+	</PropertyGroup>
 </Project>

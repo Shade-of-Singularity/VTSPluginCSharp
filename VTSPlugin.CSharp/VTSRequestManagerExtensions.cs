@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using VTSPlugin.Pooling;
 using VTSPlugin.Requests;
@@ -8,7 +9,7 @@ namespace VTSPlugin;
 /// <summary>
 /// Useful extensions for working with <see cref="IVTSConnection"/>.
 /// </summary>
-#pragma warning disable CA1822 // Extension method analyzers have a bug, where they ask to be static when they shouldn't. This disables it.
+[SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "extension keyword needs instance methods")]
 public static class VTSRequestManagerExtensions
 {
     extension(IVTSRequestManager manager)
@@ -37,7 +38,7 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Never times out.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
         /// <inheritdoc cref="RequestAPIState(IVTSRequestManager, TimeSpan)"/>
@@ -52,7 +53,7 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Times out after a given <paramref name="timeout"/> duration, unless the request is satisfied.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
         /// <remarks>
@@ -80,13 +81,13 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Never times out.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
-        /// <inheritdoc cref="RequestAuthentication(IVTSRequestManager, IVTSPlugin, ITokenStorage, TimeSpan)"/>
+        /// <inheritdoc cref="RequestAuthentication(IVTSRequestManager, IVTSPlugin, IVTSTokenStorage, TimeSpan)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public UniTask<RequestResult<VTSAuthenticationResponseData>> RequestAuthentication
-            (IVTSPlugin plugin, ITokenStorage storage)
+            (IVTSPlugin plugin, IVTSTokenStorage storage)
         {
             return RequestAuthentication(manager, plugin.Name, plugin.Developer, storage.GetToken(plugin));
         }
@@ -96,7 +97,7 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Times out after a given <paramref name="timeout"/> duration, unless the request is satisfied.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
         /// <param name="plugin">Plugin into to use in authentication.</param>
@@ -104,7 +105,7 @@ public static class VTSRequestManagerExtensions
         /// <inheritdoc cref="RequestAuthentication(IVTSRequestManager, string?, string?, string?, TimeSpan)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public UniTask<RequestResult<VTSAuthenticationResponseData>> RequestAuthentication
-            (IVTSPlugin plugin, ITokenStorage storage, TimeSpan timeout)
+            (IVTSPlugin plugin, IVTSTokenStorage storage, TimeSpan timeout)
         {
             return RequestAuthentication(manager, plugin.Name, plugin.Developer, storage.GetToken(plugin), timeout);
         }
@@ -114,7 +115,7 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Never times out.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
         /// <inheritdoc cref="RequestAuthentication(IVTSRequestManager, string?, string?, string?, TimeSpan)"/>
@@ -130,7 +131,7 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Times out after a given <paramref name="timeout"/> duration, unless the request is satisfied.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
         /// <remarks>
@@ -169,13 +170,13 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Never times out.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
-        /// <inheritdoc cref="RequestAuthenticationToken(IVTSRequestManager, IVTSPlugin, ITokenStorage, TimeSpan)"/>
+        /// <inheritdoc cref="RequestAuthenticationToken(IVTSRequestManager, IVTSPlugin, IVTSTokenStorage, TimeSpan)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public UniTask<RequestResult<VTSAuthenticationTokenResponseData>> RequestAuthenticationToken
-            (IVTSPlugin plugin, ITokenStorage storage)
+            (IVTSPlugin plugin, IVTSTokenStorage storage)
         {
             return RequestAuthenticationToken(manager, plugin, storage, Timeout.InfiniteTimeSpan);
         }
@@ -186,20 +187,18 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Times out after a given <paramref name="timeout"/> duration, unless the request is satisfied.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
         /// <param name="plugin">Plugin into to use in authentication.</param>
         /// <param name="timeout">Maximum waiting time until the request times out.</param>
         /// <inheritdoc cref="RequestAuthenticationToken(IVTSRequestManager, string?, string?, string?, TimeSpan)"/>
         public async UniTask<RequestResult<VTSAuthenticationTokenResponseData>> RequestAuthenticationToken
-            (IVTSPlugin plugin, ITokenStorage storage, TimeSpan timeout)
+            (IVTSPlugin plugin, IVTSTokenStorage storage, TimeSpan timeout)
         {
             var result = await RequestAuthenticationToken(manager, plugin.Name, plugin.Developer, plugin.Icon, timeout);
             if (result.IsSuccessful(out var data))
-            {
                 storage.SetToken(plugin, data.AuthenticationToken);
-            }
             return result;
         }
 
@@ -208,7 +207,7 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Never times out.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
         /// <inheritdoc cref="RequestAuthenticationToken(IVTSRequestManager, string?, string?, string?, TimeSpan)"/>
@@ -224,7 +223,7 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Times out after a given <paramref name="timeout"/> duration, unless the request is satisfied.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
         /// <remarks>
@@ -263,7 +262,7 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Times out after a given <paramref name="timeout"/> duration, unless the request is satisfied.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
         /// <inheritdoc cref="RequestAvailableModels(IVTSRequestManager, TimeSpan)"/>
@@ -278,7 +277,7 @@ public static class VTSRequestManagerExtensions
         /// <para>
         /// Times out after a given <paramref name="timeout"/> duration, unless the request is satisfied.
         /// Returns <see cref="RequestResult.FromFailed{T}(ErrorID)"/> if VTube Studio disconnects.
-        /// See also: <see cref="ErrorID.VTubeStudioDisconnected"/>.
+        /// See also: <see cref="ErrorID.VTubeStudioOffline"/>.
         /// </para>
         /// </summary>
         /// <remarks>
@@ -294,7 +293,6 @@ public static class VTSRequestManagerExtensions
         }
     }
 }
-#pragma warning restore CA1822 // Members can be made static (they cannot - it's a bug)
 
 /// <summary>
 /// Some test methods, to test how API looks like so far.
@@ -305,7 +303,7 @@ static class APITests
     {
         IVTSPlugin plugin = null!;
         IVTSRequestManager vts = null!;
-        ITokenStorage storage = new DirectoryTokenStorage();
+        IVTSTokenStorage storage = new ConcurrentFileTokenStorage();
 
         var api = await vts.RequestAPIState();
         if (api.IsSuccessful(out var apiData))
@@ -320,7 +318,7 @@ static class APITests
         var token = await vts.RequestAuthenticationToken(plugin, storage);
         if (token.IsSuccessful(out var tokenData))
         {
-            // Note: Don't do this. Do not log access tokens to console, or any interfaces, where it can be seen by other people.
+            // Note: Don't do this! Do not log access tokens to console, or any interfaces, where it can be seen by other people.
             IVTSLogger.Default.LogInfo($"Authenticated! New authentication token: {tokenData.AuthenticationToken}");
         }
         else

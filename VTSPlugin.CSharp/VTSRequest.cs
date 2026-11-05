@@ -13,7 +13,7 @@ public abstract class VTSRequestTemplate : VTSPacket;
 /// <summary>
 /// Request with a data entry.
 /// </summary>
-/// <typeparam name="TData"></typeparam>
+/// <typeparam name="TData">Data the request caries.</typeparam>
 public abstract class VTSRequest<TData> : VTSRequestTemplate where TData : VTSRequestData
 {
     /// <inheritdoc/>

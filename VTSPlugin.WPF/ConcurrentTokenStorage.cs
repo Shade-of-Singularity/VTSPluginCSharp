@@ -4,7 +4,7 @@ using VTSPlugin.Legacy;
 
 namespace VTSPlugin;
 
-public sealed partial class ConcurrentTokenStorage(string directory, string fileName) : ObservableObject, ITokenStorage
+public sealed partial class ConcurrentTokenStorage(string directory, string fileName) : ObservableObject, IVTSTokenStorage
 {
     /// <summary>
     /// Directory to create, at which token will be stored.

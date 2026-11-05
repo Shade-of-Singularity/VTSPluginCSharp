@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Nullable>enable</Nullable>
-    <LangVersion>preview</LangVersion>
-    <Configurations>UniTask-Debug;UniTask-Release;GDTask-Debug;GDTask-Release</Configurations>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
-using VTSPlugin;
 using VTSPlugin.Pooling;
 
 namespace VTSPlugin.Requests;

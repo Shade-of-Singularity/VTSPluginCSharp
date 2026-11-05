@@ -1,7 +1,7 @@
 ﻿namespace VTSPlugin.Pooling;
 
 /// <summary>
-/// Describes an item, that can be retrieved from and returned to an <see cref="VTSPool"/>.
+/// Describes an item, that can be retrieved from and returned to a <see cref="VTSPool"/>.
 /// </summary>
 public interface IVTSPoolable
 {

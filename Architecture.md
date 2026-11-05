@@ -1,3 +1,11 @@
+# Ambiguity w/ ServiceCore
+VTSPlugin might conflict with ServiceCore in semantics, since ServiceCore defines their own service interfaces.
+Since ServiceCore is more important in terms of being a root library - VTSPlugin will use VTS prefix
+to disambiguate class/interface names.
+
+We can turn `VTSPlugin.IService` into `VTSPlugin.IVTSSubSystem`.
+And `VTSPlugin.IVTSService` will be claimed by an actual service, managing a sole connection.
+
 # End-points
 End-point in our case - is a VTube Studio instance.
 

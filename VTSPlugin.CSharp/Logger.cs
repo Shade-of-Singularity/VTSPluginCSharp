@@ -7,7 +7,7 @@ namespace VTSPlugin;
 /// <summary>
 /// Test logger implementation.
 /// </summary>
-public sealed class Logger : IVTSLogger<DefaultLoggerOptions>
+public sealed class Logger : IVTSLogger<VTSLoggerInitializationOptions>
 {
     internal const string LogPrefix = $"[{nameof(Logger)}]";
 
@@ -36,7 +36,7 @@ public sealed class Logger : IVTSLogger<DefaultLoggerOptions>
     }
 
     IVTSLoggerInitializationOptions IVTSLogger.Options => Options;
-    public DefaultLoggerOptions Options
+    public VTSLoggerInitializationOptions Options
     {
         get => field;
         private set
@@ -47,7 +47,7 @@ public sealed class Logger : IVTSLogger<DefaultLoggerOptions>
                 PropertyChanged?.Invoke(this, KnownPropertyChangedArgs.Options);
             }
         }
-    } = DefaultLoggerOptions.Instance;
+    } = VTSLoggerInitializationOptions.Default;
 
 
     readonly SemaphoreSlim Semaphore = new(0, 1);
@@ -55,10 +55,10 @@ public sealed class Logger : IVTSLogger<DefaultLoggerOptions>
     StreamWriter? LogStream;
 
     /// <inheritdoc/>
-    public UniTask<bool> Initialize() => Initialize(DefaultLoggerOptions.Instance);
+    public UniTask<bool> Initialize() => Initialize(VTSLoggerInitializationOptions.Default);
 
     /// <inheritdoc/>
-    public async UniTask<bool> Initialize(DefaultLoggerOptions options)
+    public async UniTask<bool> Initialize(VTSLoggerInitializationOptions options)
     {
         if (options is null)
             throw new ArgumentNullException(nameof(options));
@@ -97,7 +97,7 @@ public sealed class Logger : IVTSLogger<DefaultLoggerOptions>
             if (LogStream is not null)
                 await LogStream.DisposeAsync();
             LogStream = null;
-            this.Log(ex, LogPrefix);
+            this.LogException(ex, LogPrefix);
             IsInitialized = false;
             return false;
         }

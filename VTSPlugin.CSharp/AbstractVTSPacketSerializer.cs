@@ -57,23 +57,20 @@ public abstract class AbstractVTSPacketSerializer : IVTSPacketSerializer, INotif
     /// </summary>
     private ulong PrecomputeVersion = 0;
 
-    /// <summary>
-    /// .ctor, constructing new <see cref="AbstractVTSPacketSerializer"/> with provided <paramref name="configuration"/>.
-    /// </summary>
-    /// <remarks>
-    /// <see cref="AbstractVTSPacketSerializer"/> should only be instantiated once, as it is uses generic cache,
-    /// which is shared between child classes.
-    /// </remarks>
-    /// <param name="configuration"></param>
-    protected AbstractVTSPacketSerializer(VTSPrecomputeConfiguration configuration)
-    {
-        PrecomputeConfiguration = configuration;
-    }
+	/// <summary>
+	/// .ctor, constructing new <see cref="AbstractVTSPacketSerializer"/> with provided <paramref name="configuration"/>.
+	/// </summary>
+	/// <remarks>
+	/// <see cref="AbstractVTSPacketSerializer"/> should only be instantiated once, as it is uses generic cache,
+	/// which is shared between child classes.
+	/// </remarks>
+	/// <param name="configuration"></param>
+	protected AbstractVTSPacketSerializer(VTSPrecomputeConfiguration configuration) => PrecomputeConfiguration = configuration;
 
-    /// <summary>
-    /// .ctor providing <see cref="VTSPrecomputeConfiguration.Default"/> as initial precompute settings.
-    /// </summary>
-    protected AbstractVTSPacketSerializer() : this(VTSPrecomputeConfiguration.Default) { }
+	/// <summary>
+	/// .ctor providing <see cref="VTSPrecomputeConfiguration.Default"/> as initial precompute settings.
+	/// </summary>
+	protected AbstractVTSPacketSerializer() : this(VTSPrecomputeConfiguration.Default) { }
 
     /// <inheritdoc/>
     public virtual string Serialize<T>(T instance, bool allowPrecompute = true) where T : VTSPacketTemplate
@@ -148,7 +145,7 @@ public abstract class AbstractVTSPacketSerializer : IVTSPacketSerializer, INotif
                     {
                         if (Logger.ShouldLogException())
                         {
-                            Logger.Log(ex, ToString());
+                            Logger.LogException(ex, ToString());
                             if (Logger.ShouldLogWarn())
                                 Logger.LogWarn($"Precompute for a type {typeof(T)} failed. Falling back to regular serializer for this session.");
                         }
@@ -194,6 +191,7 @@ public abstract class AbstractVTSPacketSerializer : IVTSPacketSerializer, INotif
     {
         return PrecomputeInfo<T>.Descriptor;
     }
+
     /// <summary>
     /// Sets descriptor for a provided <typeparamref name="T"/>.
     /// </summary>
@@ -210,6 +208,7 @@ public abstract class AbstractVTSPacketSerializer : IVTSPacketSerializer, INotif
     {
         return PrecomputeInfo<T>.RequestIDPrefix;
     }
+
     /// <summary>
     /// Sets RequestID prefix for a provided <typeparamref name="T"/>.
     /// Prefix is used in <see cref="string.Concat(string, string, string)"/> to construct precomputed <see cref="VTSRequest"/>s.

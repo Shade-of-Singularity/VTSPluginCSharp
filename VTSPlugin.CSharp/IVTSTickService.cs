@@ -1,16 +1,16 @@
 ﻿namespace VTSPlugin;
 
 /// <summary>
-/// Event handler for periodic updates produced by <see cref="ITickService"/>.
+/// Event handler for periodic updates produced by <see cref="IVTSTickService"/>.
 /// </summary>
 /// <param name="service">Service instance which produced this tick. Can be used to identify the source of a tick.</param>
 /// <param name="timeDelta">Imprecise time in seconds since the last tick.</param>
-public delegate void TickServiceEventHandler(ITickService service, double timeDelta);
+public delegate void TickServiceEventHandler(IVTSTickService service, double timeDelta);
 
 /// <summary>
-/// Service, responsible for ticking/periodically updating <see cref="ITickHandler"/>s.
+/// Service, responsible for ticking/periodically updating <see cref="IVTSTickHandler"/>s.
 /// </summary>
-public interface ITickService : IService<ITickServiceInitializationOptions>, IHasVTSLogger
+public interface IVTSTickService : IVTSSubSystem<IVTSTickServiceInitializationOptions>, IHasVTSLogger
 {
     /// <summary>
     /// Periodic tick event for this tick service.
@@ -23,9 +23,9 @@ public interface ITickService : IService<ITickServiceInitializationOptions>, IHa
     /// <summary>
     /// Registers <paramref name="handler"/> to handle periodic updates (ticks).
     /// </summary>
-    bool Register(ITickHandler handler);
+    bool Register(IVTSTickHandler handler);
     /// <summary>
     /// Removes <paramref name="handler"/> from receiving periodic updates (ticks).
     /// </summary>
-    bool Unregister(ITickHandler handler);
+    bool Unregister(IVTSTickHandler handler);
 }
