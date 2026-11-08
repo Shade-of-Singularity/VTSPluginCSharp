@@ -196,7 +196,7 @@ public async UniTaskVoid Requests()
 ## Ref struct zero-allocation requests.
 This aproach is more verbose, but ideal for people needing lowest possible memory footpring of the program.
 
-It's important to note that `async`-based requests are already near zero-allocation.
+It's important to note that `async`-based requests are already heap zero-allocation.
 
 It has limitations:
 1. `ref struct`s force you to "consume" the entire packet from VTube Studio on-the-spot.
