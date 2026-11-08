@@ -99,7 +99,7 @@ https://github.com/FomTarro/VTS-Sharp
 
 ## TomaszRewak / Stack only JSON parser
 Their zero heap allocation JSON parser implementation is amazing!
-Their approach inspired a creation of a JsonResult{T} struct.
+Their approach inspired a lot of underlying infrastructure.
 
 **Give them a star**: https://github.com/TomaszRewak/C-sharp-stack-only-json-parser
 
