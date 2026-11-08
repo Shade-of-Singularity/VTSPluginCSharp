@@ -94,6 +94,7 @@ Thanks to their amazing work for years, a lot of plugins people are using every 
 VBridger, T.I.T.S, VTS-Heartrate, and so many more!
 
 Their work is amazing, and the API is very clean!
+
 Consider giving them a star on GitHub! Their work deserves it.
 https://github.com/FomTarro/VTS-Sharp
 
