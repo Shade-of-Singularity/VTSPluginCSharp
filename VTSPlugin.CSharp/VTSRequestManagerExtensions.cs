@@ -303,7 +303,7 @@ static class APITests
     {
         IVTSPlugin plugin = null!;
         IVTSRequestManager vts = null!;
-        IVTSTokenStorage storage = new ConcurrentFileTokenStorage();
+        IVTSTokenStorage storage = new VTSConcurrentFileTokenStorage();
 
         var api = await vts.RequestAPIState();
         if (api.IsSuccessful(out var apiData))

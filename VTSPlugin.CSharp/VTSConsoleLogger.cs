@@ -10,7 +10,7 @@ namespace VTSPlugin;
 /// System console-based implementation for <see cref="IVTSLogger"/>.
 /// Works always, but after initialization - also manages a log file.
 /// </summary>
-public sealed class ConsoleVTSLogger : IVTSLogger<IVTSLoggerInitializationOptions>
+public sealed class VTSConsoleLogger : IVTSLogger<IVTSLoggerInitializationOptions>
 {
 	public VTSLoggingLevel LogLevel
 	{

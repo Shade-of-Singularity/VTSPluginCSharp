@@ -32,6 +32,7 @@ public static class HandlerUsage
 	/// Note: This might be a fundamental limitation of delegates. TState version was provided to resolve this.
 	/// Remark: However, at least a timecode of the request would be nice to have on the caller...? If it worth it.
 	/// P.S.: Everything here needs additional benchmarking.
+	/// TODO: Add timeouts to API. Infinite by default.
 	public static async UniTaskVoid CollectiveRequests()
 	{
 		// Normal delegate-based request.

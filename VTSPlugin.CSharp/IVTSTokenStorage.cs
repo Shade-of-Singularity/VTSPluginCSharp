@@ -13,7 +13,7 @@ public interface IVTSTokenStorage : IVTSSubSystem, IHasVTSLogger
 	public static IVTSTokenStorage Default
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get => ConcurrentFileTokenStorage.Instance;
+		get => VTSConcurrentFileTokenStorage.Instance;
 	}
 	/// <summary>
 	/// Retrieves token, associated with provided <paramref name="plugin"/>

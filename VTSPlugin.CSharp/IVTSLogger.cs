@@ -33,7 +33,7 @@ public interface IVTSLogger : IVTSSubSystem
     /// the underlying type of <see cref="Default"/> property and devirtualize all the calls to it.
     /// (Note: this has a weaker effect now, since you can overwrite default field).
     /// </remarks>
-    static readonly ConsoleVTSLogger m_DefaultLogger = new()
+    static readonly VTSConsoleLogger m_DefaultLogger = new()
     {
 #if TRACE
         LogLevel = VTSLoggingLevel.Trace
@@ -57,7 +57,7 @@ public interface IVTSLogger : IVTSSubSystem
     /// It is advised that you only swap default logger outside of the app lifecycle.
     /// </para>
     /// <para>
-    /// If provided with null - resets back to <see cref="ConsoleVTSLogger"/>.
+    /// If provided with null - resets back to <see cref="VTSConsoleLogger"/>.
     /// </para>
     /// </remarks>
     public static IVTSLogger Default
@@ -99,7 +99,7 @@ public interface IVTSLogger : IVTSSubSystem
     /// </para>
     /// </remarks>
     /// <param name="input">Input to output to the console.</param>
-    /// <param name="prefix">Prefix to add before the message. See <see cref="ConsoleVTSLogger"/> for implementation example.</param>
+    /// <param name="prefix">Prefix to add before the message. See <see cref="VTSConsoleLogger"/> for implementation example.</param>
     void Log(object? input, object? prefix, VTSLoggingLevel level = VTSLoggingLevel.Info);
 
     public static new class KnownPropertyChangedArgs

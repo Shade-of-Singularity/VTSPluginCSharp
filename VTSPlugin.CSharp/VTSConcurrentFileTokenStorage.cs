@@ -8,12 +8,12 @@ namespace VTSPlugin;
 /// <summary>
 /// Thread-safe <see cref="IVTSTokenStorage"/> implementation, using files as its main storage.
 /// </summary>
-public sealed class ConcurrentFileTokenStorage : IVTSTokenStorage
+public sealed class VTSConcurrentFileTokenStorage : IVTSTokenStorage
 {
 	/// <summary>
 	/// Default instance to
 	/// </summary>
-	public static readonly ConcurrentFileTokenStorage Instance = new();
+	public static readonly VTSConcurrentFileTokenStorage Instance = new();
 
 	/// <inheritdoc/>
 	public bool IsInitialized { get; set; }

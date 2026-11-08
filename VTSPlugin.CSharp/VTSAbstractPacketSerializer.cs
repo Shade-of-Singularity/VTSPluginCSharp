@@ -12,7 +12,7 @@ namespace VTSPlugin;
 /// <remarks>
 /// Intended to be instantiated only once.
 /// </remarks>
-public abstract class AbstractVTSPacketSerializer : IVTSPacketSerializer, INotifyPropertyChanged
+public abstract class VTSAbstractPacketSerializer : IVTSPacketSerializer, INotifyPropertyChanged
 {
     /// <inheritdoc/>
     public bool EnablePrecompute { get; set; }
@@ -58,19 +58,19 @@ public abstract class AbstractVTSPacketSerializer : IVTSPacketSerializer, INotif
     private ulong PrecomputeVersion = 0;
 
 	/// <summary>
-	/// .ctor, constructing new <see cref="AbstractVTSPacketSerializer"/> with provided <paramref name="configuration"/>.
+	/// .ctor, constructing new <see cref="VTSAbstractPacketSerializer"/> with provided <paramref name="configuration"/>.
 	/// </summary>
 	/// <remarks>
-	/// <see cref="AbstractVTSPacketSerializer"/> should only be instantiated once, as it is uses generic cache,
+	/// <see cref="VTSAbstractPacketSerializer"/> should only be instantiated once, as it is uses generic cache,
 	/// which is shared between child classes.
 	/// </remarks>
 	/// <param name="configuration"></param>
-	protected AbstractVTSPacketSerializer(VTSPrecomputeConfiguration configuration) => PrecomputeConfiguration = configuration;
+	protected VTSAbstractPacketSerializer(VTSPrecomputeConfiguration configuration) => PrecomputeConfiguration = configuration;
 
 	/// <summary>
 	/// .ctor providing <see cref="VTSPrecomputeConfiguration.Default"/> as initial precompute settings.
 	/// </summary>
-	protected AbstractVTSPacketSerializer() : this(VTSPrecomputeConfiguration.Default) { }
+	protected VTSAbstractPacketSerializer() : this(VTSPrecomputeConfiguration.Default) { }
 
     /// <inheritdoc/>
     public virtual string Serialize<T>(T instance, bool allowPrecompute = true) where T : VTSPacketTemplate
@@ -240,7 +240,7 @@ public abstract class AbstractVTSPacketSerializer : IVTSPacketSerializer, INotif
     protected void InvokePropertyChanged(object sender, PropertyChangedEventArgs e) => PropertyChanged?.Invoke(sender, e);
 
     /// <inheritdoc/>
-    public override string ToString() => $"[{nameof(AbstractVTSPacketSerializer)}]";
+    public override string ToString() => $"[{nameof(VTSAbstractPacketSerializer)}]";
 
     /// <summary>
     /// Generic holder for precompute cache.

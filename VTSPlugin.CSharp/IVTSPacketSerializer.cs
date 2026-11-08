@@ -13,7 +13,7 @@ public interface IVTSPacketSerializer : IHasVTSLogger
     public static IVTSPacketSerializer Default
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => DefaultVTSPacketSerializer.Instance;
+        get => VTSDefaultPacketSerializer.Instance;
     }
     /// <summary>
     /// Whether precomputing should be enabled.
